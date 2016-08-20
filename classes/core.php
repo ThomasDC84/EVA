@@ -22,7 +22,7 @@ class core {
 		$this->_pluginManager->toggleHook($this->_pmToken);
 		
 		$_settings = new settings;
-		
+		$_settings->setCookie("fagor!");
 		echo 'La lingua rilevata dal sistema &egrave;: ' .$_settings->getLanguage(); 
 	}
 	
