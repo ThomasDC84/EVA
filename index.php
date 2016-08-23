@@ -6,7 +6,7 @@ if(!defined('__EVA_HOME__')) {
 
 include_once(__EVA_HOME__ . "/functions/default.php");
 
-new EVA\core;
+EVA\core::boot();
 
 
 

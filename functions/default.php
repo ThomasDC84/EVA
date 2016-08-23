@@ -6,7 +6,6 @@ define('HOOK_LAST', 2);
 
 function evaAutoCall($className) {
 	$className = str_ireplace('EVA\\', '', $className);
-	//echo __EVA_HOME__ . '/classes/' . $className . '.php';
 	if(file_exists(__EVA_HOME__ . '/classes/' . $className . '.php')) {
 		include_once __EVA_HOME__ . '/classes/' . $className . '.php';
 	}

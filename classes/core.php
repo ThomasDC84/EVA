@@ -2,28 +2,25 @@
 
 namespace EVA;
 
-class core {
+final class core {
 	
 	const VERSION = '4.0.0';
 	
-	private $_settings;
+	protected static $_pluginManager;
+	private static $_pmToken;
 	
-	private $_pluginManager;
-	private $_pmToken;
-	
-	public function __construct() {
-		$this->_pmToken = rand();
-		$this->_pluginManager = new pluginManager($this->_pmToken);
-		$this->_pluginManager->attach(new pluginExample);
-		$this->_pluginManager->toggleHook($this->_pmToken);
-		$this->_pluginManager->toggleHook($this->_pmToken);
-		$this->_pluginManager->toggleHook($this->_pmToken);
-		$this->_pluginManager->toggleHook(98345938);
-		$this->_pluginManager->toggleHook($this->_pmToken);
-		
-		$_settings = new settings;
-		$_settings->setCookie("fagor!");
-		echo 'La lingua rilevata dal sistema &egrave;: ' .$_settings->getLanguage(); 
+	public static function boot() {
+		settings::start();
+		self::$_pmToken = rand();
+		if( !isset(self::$_pluginManager) ) {
+			self::$_pluginManager = new pluginManager(self::$_pmToken);
+		}
+		self::$_pluginManager->attach(new pluginExample);
+		self::$_pluginManager->toggleHook(self::$_pmToken);
+		self::$_pluginManager->toggleHook(self::$_pmToken);
+		self::$_pluginManager->toggleHook(self::$_pmToken);
+		self::$_pluginManager->toggleHook(98345938);
+		self::$_pluginManager->toggleHook(self::$_pmToken);
 	}
 	
 }
