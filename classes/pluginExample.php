@@ -9,10 +9,13 @@ class pluginExample implements \SplObserver {
 			case 1: echo 'i contenuti sono pronti<br/>'; break;
 			case 2: echo 'la pagina &egrave; pronta!<br/>'; break;
 			default: echo 'abbiamo sforato, cavolo!<br/>';
-			$encodings = settings::getEncoding();
-			foreach($encodings as $encoding) {
-				echo 'found encode type: ' . $encoding . '<br/>';
-			}
+			echo '<pre>';
+			var_dump(settings::getCharset());
+			var_dump(settings::getLanguage());
+			var_dump(settings::getEncoding());
+			settings::setCookie('fagor!', 'ebbon ebbon!');
+			var_dump(settings::getCookie('fagor!'));
+			echo '</pre>';
 		}
     }
 }

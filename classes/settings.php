@@ -4,13 +4,20 @@ namespace EVA;
 
 final class settings {
 	
-	private static $_language;
-	private static $_charset;
-	private static $_encoding;
+	protected static $_language;
+	protected static $_charset;
+	protected static $_encoding;
 	
-	public static function start() {
-		self::$_language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-		self::_detectEncoding();
+	public static function boot() {
+		
+		// $config = parse_ini_file('../config.ini'); 
+		
+		self::$_language = \conNeg::langBest('it,en;q=0.7');
+		self::$_charset = \conNeg::charBest('UTF-8,iso-8859-1;q=0.9,UTF-16;q=0.5');
+		if(self::$_charset == NULL) {
+			self::$_charset = 'utf-8';
+		}
+		self::$_encoding = \conNeg::encBest('gzip, deflate;q=0.6');
 	}
 	
 	private static function _detectEncoding() {
@@ -30,21 +37,13 @@ final class settings {
 	}
 	
 	public static function getCookie($cookieName) {
-		// return $this;
+		$cookieVal = false;
+		if(isset($_COOKIE[$cookieName])) {
+			$cookieVal = $_COOKIE[$cookieName];
+		}
+		return $cookieVal;
+			
 	}
-    /**
-     * 
-     * 
-     * @param <string> $cookieName 
-     * @param <string> $value  
-     * @param <int> $expire  
-     * @param <string> $path  
-     * @param <string> $domain  
-     * @param <bool> $secure  
-     * @param <bool> $httponly  
-     * 
-     * @return <bool>
-     */
 	
 	public static function setCookie($cookieName, $value = "", $expire = 0, $path = "", $domain = "", $secure = false, $httponly = false) {
 		return setCookie($cookieName, $value, $expire, $path, $domain, $secure, $httponly);
