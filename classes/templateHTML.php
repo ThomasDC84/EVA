@@ -37,6 +37,13 @@ class templateHTML implements iTemplate {
 		array($this->title, $this->description, $this->contents),
 		$this->output
 		);
+		
+		foreach(sidebarManager::getSidebars() as $sidebar) {
+			$this->output = str_replace(
+				'%{' . $sidebar->getName() . '}%',
+				$sidebar->getContents(),
+				$this->output);
+		}
 		return $this->output;
 	}
 }

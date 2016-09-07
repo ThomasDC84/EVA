@@ -2,53 +2,60 @@
 
 namespace EVA;
 
-include_once __EVA_HOME__ . '/modules/pages/pages.php';
+include_once __EVA_HOME__ . '/modules/pages/page.php';
 
 final class core {
 	
 	const VERSION = '4.0.0';
 	
-	protected static $_pluginManager;
-	protected static $_module;
-	protected static $_output;
+	protected static $pluginManager;
 	
-	private static $_pmToken;
+	protected static $module;
+	
+	protected static $output;
+	
+	private static $pmToken;
 	
 	public static function boot() {
-		ob_start();
 		
 		settings::boot();
 		dbFactory::boot();
 		
-		self::$_pmToken = rand();
-		self::$_pluginManager = new pluginManager(self::$_pmToken);
-		self::$_pluginManager->attach(new pluginExample);
-		self::$_pluginManager->toggleHook(self::$_pmToken); //HOOK_FIRST
+		self::$pmToken = rand();
+		self::$pluginManager = new pluginManager(self::$pmToken);
+		self::$pluginManager->attach(new pluginExample);
 		
-		$template = templateFactory::buildDefaultTemplate();
-		$module = new pages(1);
+		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_FIRST
 		
-		self::$_pluginManager->toggleHook(self::$_pmToken); //HOOK_CONTENTS
+		self::loadModule();
+		
+		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_CONTENTS
+		
+		self::$output = self::$module->getOutput();
 				
-		$template->setTitle($module->getTitle());
-		$template->setDescription($module->getDescription());
-		$template->setContents($module->getContents());
-		
-		echo $template->getOutput();
-		
-		self::$_pluginManager->toggleHook(self::$_pmToken); //HOOK_LAST
+		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_LAST
 		
 		self::shutdown();
 	}
 	
 	private static function loadModule() {
-		/*self::$_module = detectModule();
-		$template = templateFactory::buildTemplate();
-		$template->setContents(self::$_module->getContents());*/
+		self::$module = new page();
+	}
+	
+	public static function &getModule() {
+		return self::$module;
+	}
+	
+	public static function getOutput() {
+		return self::$output;
+	}
+	
+	public static function setOutput($string) {
+		self::$output = $string;
 	}
 	
 	private static function shutdown() {
-		ob_end_flush();
+		echo self::$output;
 	}
 	
 }

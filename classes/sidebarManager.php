@@ -6,14 +6,14 @@ class sidebarManager {
 	
 	private static $sidebars;
 	
-	public static function addSidebar($sidebarID) {
-		$sidebars[$sidebarID] = new sidebar();
+	public static function addSidebar($sidebar) {
+		self::$sidebars[] = $sidebar;
 	}
 	
-	public static function getSidebar($sidebarID) {
+	public static function getSidebars() {
 		$retVal = false;
-		if(isset($sidebars[$sidebarID])) {
-			$retVal = $sidebars[$sidebarID]
+		if(!isset($sidebars)) {
+			$retVal = self::$sidebars;
 		}
 		return $retVal;
 	}

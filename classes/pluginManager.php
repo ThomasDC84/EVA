@@ -4,7 +4,7 @@ namespace EVA;
 
 class pluginManager implements \SplSubject {
     private $_plugins;
-	private $_hook = -1;
+	private $_hook = 0;
 	private $_token;
 
     public function __construct($token) {
@@ -32,7 +32,7 @@ class pluginManager implements \SplSubject {
 			$this->notify();
 		}
 		else {
-			echo $authToken . ' diverso da ' . $this->_token . '<br/>';
+			/*$authToken different from $this->_token*/;
 		}
 	}
 

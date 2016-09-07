@@ -6,15 +6,20 @@ class sidebar {
 	
 	private $name;
 	private $widgets;
+	private $contents;
 	
 	public function __construct($name) {
 		$this->name = $name;
 	}
 	
-	public function addWidget($index, $widget) {
+	public function getName() {
+		return $this->name;
+	}
+	
+	public function addWidget($widget, $index) {
 		$retVal = false;
 		if($widget instanceof iWidget) {
-			$widgets[$index] = $widget;
+			$this->widgets[$index] = $widget;
 			$retVal = true;
 		}
 		return $retVal;
@@ -35,6 +40,21 @@ class sidebar {
 			$retVal = true;
 		}
 		return $retVal;
+	}
+	
+	public function getContents() {
+		$this->contents = '<table style="width:100%">';
+		foreach($this->widgets as $widget) {
+			$this->contents .= 
+				'<tr>
+					<th>'.$widget->getTitle().'</th>
+				</tr>
+				<tr>
+					<td style="text-align: center;">'.$widget->getContents().'</td>
+				</tr>';
+		}
+		$this->contents .= '</table>';
+		return $this->contents;
 	}
 }
 
