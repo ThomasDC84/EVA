@@ -6,6 +6,8 @@ class dbMysql {
 	
 	private $connection;
 	
+	private $returnedSet;
+	
 	public function __construct($host, $username, $password, $dbName) {
 		$this->connection = mysqli_connect($host, $username, $password) or die("what?");
 		mysqli_select_db($this->connection, $dbName) or die( "Unable to select database");
@@ -15,13 +17,11 @@ class dbMysql {
 	}
 	
 	public function query($query) {
-		$results=array();
-		$queryResult = mysqli_query($this->connection, $query);
-		while( $result = mysqli_fetch_array( $queryResult, MYSQL_ASSOC ) ) {
-			array_push($results, $result);
-        }
-		$results = $results[0];
-		return $results;
+		$this->returnedSet = mysqli_query($this->connection, $query);
+	}
+	
+	public function fetchResults() {
+		return mysqli_fetch_array( $this->returnedSet, MYSQL_ASSOC );		
 	}
 	
 	public function __destruct() {

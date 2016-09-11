@@ -2,7 +2,7 @@
 
 namespace EVA;
 
-class widgetExample implements iWidget {
+class exampleWidget implements iWidget {
 	
 	public function __construct($title = '', $contents = '') {
 		$this->title = $title;

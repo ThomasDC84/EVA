@@ -4,36 +4,41 @@ namespace EVA;
 
 final class settings {
 	
-	protected static $_language;
-	protected static $_charset;
-	protected static $_encoding;
+	protected static $language;
+	protected static $charset;
+	protected static $encoding;
+	protected static $config;
 	
 	public static function boot() {
 		
-		// $config = parse_ini_file('../config.ini'); 
+		self::$config = parse_ini_file(__EVA_HOME__ . '/conf/default.ini'); 
 		
-		self::$_language = \conNeg::langBest('it,en;q=0.7');
-		self::$_charset = \conNeg::charBest('UTF-8,iso-8859-1;q=0.9,UTF-16;q=0.5');
-		if(self::$_charset == NULL) {
-			self::$_charset = 'utf-8';
+		self::$language = \conNeg::langBest('it,en;q=0.7');
+		self::$charset = \conNeg::charBest('UTF-8,iso-8859-1;q=0.9,UTF-16;q=0.5');
+		if(self::$charset == NULL) {
+			self::$charset = 'utf-8';
 		}
-		self::$_encoding = \conNeg::encBest('gzip, deflate;q=0.6');
+		self::$encoding = \conNeg::encBest('gzip, deflate;q=0.6');
 	}
 	
-	private static function _detectEncoding() {
-		self::$_encoding = explode(',', $_SERVER['HTTP_ACCEPT_ENCODING']);
+	public static function getConf($parameter) {
+		$cfg = false;
+		if(isset(self::$config[$parameter])) {
+			$cfg = self::$config[$parameter];
+		}
+		return $cfg;
 	}
-	
+		
 	public static function getLanguage() {
-		return self::$_language;
+		return self::$language;
 	}
 	
 	public static function getCharset() {
-		return self::$_charset;		
+		return self::$charset;		
 	}
 	
 	public static function getEncoding() {
-		return self::$_encoding;
+		return self::$encoding;
 	}
 	
 	public static function getCookie($cookieName) {

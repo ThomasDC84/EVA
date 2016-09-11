@@ -11,24 +11,11 @@ class page implements iModules {
 	
 	public function __construct() {
 		$db = dbFactory::buildDefaultDB();
-		$r = $db->query("SELECT * FROM `pages` ");
+		$db->query("SELECT * FROM `pages` WHERE `id` = 1 ");
+		$r = $db->fetchResults();
 		$this->title = $r['title'];
 		$this->description = $r['description'];
 		$this->contents = $r['contents'];
-		$template = templateFactory::buildDefaultTemplate();				
-		$template->setTitle($this->title);
-		$template->setDescription($this->description);
-		$template->setContents($this->contents);
-				
-		$testWidget = new widgetExample('Test', 'Hello World!');
-		
-		$sidebar = new sidebar('leftSidebar');
-		
-		$sidebar->addWidget($testWidget, 1);
-		
-		sidebarManager::addSidebar($sidebar);
-		
-		$this->output = $template->getOutput();
 	}
 	
 	public function getTitle() {
@@ -53,6 +40,23 @@ class page implements iModules {
 	
 	public function setContents($contents) {
 		$this->contents = $contents;
+	}
+	
+	public function prepare() {
+		$template = templateFactory::buildTemplate('HTML');				
+		$template->setTitle($this->title);
+		$template->setDescription($this->description);
+		$template->setContents($this->contents);
+				
+		$testWidget = new exampleWidget('Test', 'Hello World!');
+		
+		$sidebar = new sidebar('leftSidebar');
+		
+		$sidebar->addWidget($testWidget, 1);
+		
+		sidebarManager::addSidebar($sidebar);
+		
+		$this->output = $template->getOutput();		
 	}
 	
 	public function getOutput() {

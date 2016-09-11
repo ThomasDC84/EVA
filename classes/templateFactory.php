@@ -4,7 +4,12 @@ namespace EVA;
 
 class templateFactory {
 	public static function buildTemplate($templateType) {
-		return new templateHTML();
+		$template = false;
+		if(class_exists('EVA\template'.$templateType, true)) {
+			$templateClass = 'EVA\template' . $templateType;
+			$template = new $templateClass();
+		}
+		return $template;
 	}
 	
 	public static function buildDefaultTemplate() {

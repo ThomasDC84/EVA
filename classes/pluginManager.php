@@ -8,8 +8,9 @@ class pluginManager implements \SplSubject {
 	private $_token;
 
     public function __construct($token) {
-        $this->_plugins = new \SplObjectStorage();
 		$this->_token = $token;
+        $this->_plugins = new \SplObjectStorage();
+		//load plugins list, require db
     }
 
     public function attach(\SplObserver $plugin) {

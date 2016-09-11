@@ -2,8 +2,6 @@
 
 namespace EVA;
 
-include_once __EVA_HOME__ . '/modules/pages/page.php';
-
 final class core {
 	
 	const VERSION = '4.0.0';
@@ -23,13 +21,15 @@ final class core {
 		
 		self::$pmToken = rand();
 		self::$pluginManager = new pluginManager(self::$pmToken);
-		self::$pluginManager->attach(new pluginExample);
+		self::$pluginManager->attach(new examplePlugin());
 		
 		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_FIRST
 		
 		self::loadModule();
 		
 		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_CONTENTS
+		
+		self::$module->prepare();
 		
 		self::$output = self::$module->getOutput();
 				
@@ -39,10 +39,19 @@ final class core {
 	}
 	
 	private static function loadModule() {
-		self::$module = new page();
+		preg_match('/^\/(.*?)\//i', $_SERVER['REQUEST_URI'],$m);
+		$m = array_pop($m);
+		if(file_exists(__EVA_HOME__ . '/modules/' . $m . '/module.php')
+			and (class_exists($m) or class_exists('EVA\\'.$m))) {
+				self::$module = new $m();
+		}
+		else {
+			include_once __EVA_HOME__ . '/modules/page/module.php';
+			self::$module = new page();
+		}
 	}
 	
-	public static function &getModule() {
+	public static function getModule() {
 		return self::$module;
 	}
 	

@@ -1,8 +1,8 @@
 <?php
 
-define('HOOK_FIRST', 0);
-define('HOOK_CONTENTS', 1);
-define('HOOK_LAST', 2);
+define('HOOK_FIRST', 1);
+define('HOOK_CONTENTS', 2);
+define('HOOK_LAST', 3);
 
 function evaAutoCall($className) {
 	$className = str_ireplace('EVA\\', '', $className);

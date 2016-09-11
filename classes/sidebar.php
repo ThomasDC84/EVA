@@ -2,7 +2,7 @@
 
 namespace EVA;
 
-class sidebar {
+class sidebar implements iSidebar {
 	
 	private $name;
 	private $widgets;

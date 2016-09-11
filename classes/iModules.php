@@ -16,6 +16,8 @@ interface iModules {
 	
 	public function setContents($contents);
 	
+	public function prepare();
+	
 	public function getOutput();
 	
 }

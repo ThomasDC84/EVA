@@ -4,22 +4,25 @@ namespace EVA;
 
 class dbFactory {
 	
+	private static $defaultDB;
+	
 	public static function boot() {
-		// read the conf
+		if(!self::$defaultDB = settings::getConf('defaultDB')) {
+			self::$deafultDB = 'none';
+		}
 	}
 	
-	public static function build($dbType) {
-		$db = false;
+	public static function buildDB($dbType) {
 		switch($dbType) {
-			case 'MySQL': $db = new dbMysql(); break;
-			case 'PostgreSQL': $db = new dbPostgreSQL(); break;
-			default:;
+			case 'MySQL': $db = new dbMysql('localhost', 'root', '', 'dovelocompro'); break;
+			case 'SQLite3': $db = new dbSQLite3(); break;
+			default: $db = false;
 		}
 		return $db;
 	}
 	
 	public static function buildDefaultDB() {
-		return $db = new dbMysql('localhost', 'root', '', 'dovelocompro');
+		return self::buildDB(self::$defaultDB);
 	}
 
 }
