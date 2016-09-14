@@ -14,7 +14,10 @@ class dbFactory {
 	
 	public static function buildDB($dbType) {
 		switch($dbType) {
-			case 'MySQL': $db = new dbMysql('localhost', 'root', '', 'dovelocompro'); break;
+			case 'MySQL': $db = new dbMysql(settings::getConf('host'),
+											settings::getConf('username'),
+											settings::getConf('password'),
+											settings::getConf('dbname')); break;
 			case 'SQLite3': $db = new dbSQLite3(); break;
 			default: $db = false;
 		}

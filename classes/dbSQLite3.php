@@ -6,10 +6,22 @@ class dbSQLite3 {
 	
 	private $handle;
 	
+	private $locationIsSet;
+	
 	private $returnedSet;
 	
-	public function __construct($location = __EVA_HOME__ . '/sql.db') {
-		$this->handle = new \SQLite3($location);
+	public function __construct($location = __EVA_HOME__ . '/db/sql.db') {
+		$this->locationIsSet = false;
+		if($location != false) {
+			$this->setLocation($location);
+			$this->locationIsSet = true;
+		}
+	}
+	
+	public function setLocation($location) {
+		if(!$this->locationIsSet) {
+			$this->handle = new \SQLite3($location);
+		}
 	}
 	
 	public function query($query) {
