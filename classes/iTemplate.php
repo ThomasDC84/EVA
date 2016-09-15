@@ -10,8 +10,6 @@ interface iTemplate {
 	
 	public function setContents($contents);
 	
-	public function addSidebar($sidebar, $sidebarID);
-	
 	public function getOutput();
 	
 }

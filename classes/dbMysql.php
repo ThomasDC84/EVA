@@ -17,7 +17,7 @@ class dbMysql {
 	}
 	
 	public function query($query) {
-		$this->returnedSet = mysqli_query($this->connection, $query);
+		return $this->returnedSet = mysqli_query($this->connection, $query);
 	}
 	
 	public function fetchResults() {

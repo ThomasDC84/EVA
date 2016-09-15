@@ -11,7 +11,7 @@ final class settings {
 	
 	public static function boot() {
 		
-		self::$config = parse_ini_file(__EVA_HOME__ . '/conf/default.ini'); 
+		self::$config = parse_ini_file(__EVA_HOME__ . '/conf/default.ini.php', true); 
 		
 		self::$language = \conNeg::langBest('it,en;q=0.7');
 		self::$charset = \conNeg::charBest('UTF-8,iso-8859-1;q=0.9,UTF-16;q=0.5');
@@ -21,10 +21,10 @@ final class settings {
 		self::$encoding = \conNeg::encBest('gzip, deflate;q=0.6');
 	}
 	
-	public static function getConf($parameter) {
+	public static function getConf($parameter, $subparam) {
 		$cfg = false;
-		if(isset(self::$config[$parameter])) {
-			$cfg = self::$config[$parameter];
+		if(isset(self::$config[$parameter][$subparam])) {
+			$cfg = self::$config[$parameter][$subparam];
 		}
 		return $cfg;
 	}

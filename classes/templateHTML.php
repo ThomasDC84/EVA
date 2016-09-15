@@ -27,10 +27,6 @@ class templateHTML implements iTemplate {
 		$this->contents = $contents;		
 	}
 	
-	public function addSidebar($sidebar, $sidebarID) {
-		//nothing here for the moment
-	}
-	
 	public function getOutput() {
 		$this->output = str_replace(array('%{title}%', '%{descritpion}%', '%{contents}%'),
 									array($this->title, $this->description, $this->contents),

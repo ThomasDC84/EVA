@@ -6,11 +6,11 @@ final class core {
 	
 	const VERSION = '4.0.0';
 	
-	protected static $pluginManager;
+	private static $pluginManager;
 	
-	protected static $module;
+	private static $module;
 	
-	protected static $output;
+	private static $output;
 	
 	private static $pmToken;
 	
@@ -39,7 +39,7 @@ final class core {
 	}
 	
 	private static function loadModule() {
-		preg_match('/^\/(.*?)\//i', $_SERVER['REQUEST_URI'],$m);
+		preg_match('/^\/(.*?)\//i', $_SERVER['REQUEST_URI'], $m);
 		$m = array_pop($m);
 		if(file_exists(__EVA_HOME__ . '/modules/' . $m . '/module.php')
 			and (class_exists($m) or class_exists('EVA\\'.$m))) {
