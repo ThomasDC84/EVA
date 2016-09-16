@@ -21,7 +21,6 @@ final class core {
 		
 		self::$pmToken = rand();
 		self::$pluginManager = new pluginManager(self::$pmToken);
-		self::$pluginManager->attach(new examplePlugin());
 		
 		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_FIRST
 		

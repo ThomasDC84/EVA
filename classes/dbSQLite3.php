@@ -10,7 +10,7 @@ class dbSQLite3 {
 	
 	private $returnedSet;
 	
-	public function __construct($location = __EVA_HOME__ . '/db/sql.db') {
+	public function __construct($location = false) {
 		$this->locationIsSet = false;
 		if($location != false) {
 			$this->setLocation($location);
@@ -25,7 +25,20 @@ class dbSQLite3 {
 	}
 	
 	public function query($query) {
-		$this->returnedSet = $this->handle->query($query);
+		$result = false;
+		if($this->returnedSet = $this->handle->query($query)) {
+			$result = true;
+		}
+		return $result; 
+	}
+	
+	public function getNumberOfRows() {
+		$numberOfRows = 0;
+		$this->returnedSet->reset();
+		while ($this->returnedSet->fetchArray())
+			$numberOfRows++;
+		$this->returnedSet->reset();
+		return $numberOfRows;
 	}
 	
 	public function fetchResults($type = SQLITE3_ASSOC) {

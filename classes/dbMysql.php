@@ -17,9 +17,17 @@ class dbMysql {
 	}
 	
 	public function query($query) {
-		return $this->returnedSet = mysqli_query($this->connection, $query);
+		$result = false;
+		if($this->returnedSet = mysqli_query($this->connection, $query)) {
+			$result = true;
+		}
+		return $result;
 	}
 	
+	public function getNumberOfRows() {
+		return mysqli_num_rows($this->returnedSet);
+	}
+		
 	public function fetchResults() {
 		return mysqli_fetch_array( $this->returnedSet, MYSQL_ASSOC );		
 	}

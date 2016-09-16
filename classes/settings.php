@@ -21,8 +21,11 @@ final class settings {
 		self::$encoding = \conNeg::encBest('gzip, deflate;q=0.6');
 	}
 	
-	public static function getConf($parameter, $subparam) {
+	public static function getConf($parameter, $subparam = null) {
 		$cfg = false;
+		if($subparam == null and isset(self::$config[$parameter])) {
+			$cfg = self::$config[$parameter];
+		}
 		if(isset(self::$config[$parameter][$subparam])) {
 			$cfg = self::$config[$parameter][$subparam];
 		}

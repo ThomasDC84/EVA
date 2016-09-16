@@ -11,6 +11,11 @@ class pluginManager implements \SplSubject {
 		$this->_token = $token;
         $this->_plugins = new \SplObjectStorage();
 		//load plugins list, require db
+		foreach(settings::getConf('Plugins') as $plugin) {
+			if(class_exists($plugin)) {
+				$this->attach(new $plugin());
+			}			
+		}
     }
 
     public function attach(\SplObserver $plugin) {

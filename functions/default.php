@@ -14,9 +14,23 @@ function evaAutoCall($className) {
 		spl_autoload_call($className);
 		spl_autoload_register('evaAutoCall');
 	}
-};
+}
 
 spl_autoload_register('evaAutoCall');
+
+function evaAutoCallPlugin($plugin) {
+	$plugin = str_ireplace('EVA\\', '', $plugin);
+	if(file_exists(__EVA_HOME__ . '/plugins/' . $plugin . '/plugin.php')) {
+		include_once __EVA_HOME__ . '/plugins/' . $plugin . '/plugin.php';
+	}
+	else {
+		spl_autoload_unregister('evaAutoCallPlugin');
+		spl_autoload_call($plugin);
+		spl_autoload_register('evaAutoCallPlugin');
+	}
+}
+
+spl_autoload_register('evaAutoCallPlugin');
 
 function errorReport($errorMessage, $errorLevel) {
 	

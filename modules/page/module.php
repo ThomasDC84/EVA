@@ -13,8 +13,8 @@ class page implements iModules {
 	public function __construct() {
 		$db = dbFactory::buildDefaultDB();
 		$this->detectID();
-		if($p = $db->query('SELECT * FROM `pages` WHERE `id` = ' . $this->id)
-			and $p->num_rows != 0) {
+		if($db->query('SELECT * FROM `pages` WHERE `id` = ' . $this->id) and
+			$db->getNumberOfRows() != 0) {
 			$r = $db->fetchResults();
 			$this->title = $r['title'];
 			$this->description = $r['description'];
@@ -33,8 +33,8 @@ class page implements iModules {
 		$id = trim($id, '/');
 		$id = explode('/', $id);
 		$id = array_pop($id);
-		if(!ctype_digit($id)) {
-			$id = 1;
+		if(!ctype_digit($id) or empty($id)) {
+			$this->id = 1;
 		}
 		else {
 			$this->id = $id;
