@@ -12,7 +12,11 @@ class templateHTML implements iTemplate {
 	private $output;
 	
 	public function __construct() {
-		$this->output = file_get_contents(__EVA_HOME__ . '/modules/page/template.htm');
+		$this->output = '';
+	}
+	
+	public function setTemplate($template) {
+		$this->output = file_get_contents($template);
 	}
 	
 	public function setTitle($title) {
@@ -30,11 +34,13 @@ class templateHTML implements iTemplate {
 	public function getOutput() {
 		$this->output = str_replace(array('%{title}%', '%{descritpion}%', '%{contents}%'),
 									array($this->title, $this->description, $this->contents),
-									$this->output);		
-		foreach(sidebarManager::getSidebars() as $sidebar) {
-			$this->output = str_replace('%{' . $sidebar->getName() . '}%',
-										$sidebar->getContents(),
-										$this->output);
+									$this->output);
+		if(sidebarManager::getNumberOfSidebars() > 0) {
+			foreach(sidebarManager::getSidebars() as $sidebar) {
+				$this->output = str_replace('%{' . $sidebar->getName() . '}%',
+											$sidebar->getContents(),
+											$this->output);
+			}
 		}
 		return $this->output;
 	}

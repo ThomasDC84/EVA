@@ -40,8 +40,7 @@ final class core {
 	private static function loadModule() {
 		preg_match('/^\/(.*?)\//i', $_SERVER['REQUEST_URI'], $m);
 		$m = array_pop($m);
-		if(file_exists(__EVA_HOME__ . '/modules/' . $m . '/module.php')
-			and (class_exists($m) or class_exists('EVA\\'.$m))) {
+		if(class_exists($m)) {
 				self::$module = new $m();
 		}
 		else {

@@ -66,7 +66,8 @@ class page implements iModules {
 	}
 	
 	public function prepare() {
-		$template = templateFactory::buildTemplate('HTML');				
+		$template = templateFactory::buildTemplate('HTML');		
+		$template->setTemplate(__EVA_HOME__ . '/modules/page/template.htm');
 		$template->setTitle($this->title);
 		$template->setDescription($this->description);
 		$template->setContents($this->contents);
