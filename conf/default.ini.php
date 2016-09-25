@@ -17,5 +17,5 @@ socket = ""
 dbname = eva
 
 [Plugins]
-NBBC Parser = nbbc
+;NBBC Parser = nbbc
 GZ Compressor = EVA\gzcompressor

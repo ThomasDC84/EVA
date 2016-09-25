@@ -31,6 +31,15 @@ final class settings {
 		}
 		return $cfg;
 	}
+	
+	public static function setConf($value, $parameter, $subparam = null) {
+		if($subparam == null) {
+			self::$config[$parameter] = $value;
+		}
+		else {
+			self::$config[$parameter][$subparam] = $value;
+		}
+	}
 		
 	public static function getLanguage() {
 		return self::$language;
