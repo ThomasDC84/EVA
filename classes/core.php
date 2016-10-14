@@ -38,13 +38,12 @@ final class core {
 	}
 	
 	private static function loadModule() {
-		preg_match('/^\/(.*?)\//i', $_SERVER['REQUEST_URI'], $m);
-		$m = array_pop($m);
+		$m = explode('/', $_SERVER['REQUEST_URI']);
+		$m = $m[1];
 		if(class_exists($m)) {
-				self::$module = new $m();
+			self::$module = new $m();
 		}
 		else {
-			include_once __EVA_HOME__ . '/modules/page/module.php';
 			self::$module = new page();
 		}
 	}
