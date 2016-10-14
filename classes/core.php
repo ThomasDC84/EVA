@@ -30,6 +30,8 @@ final class core {
 		
 		self::$module->prepare();
 		
+		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_OUTPUT
+		
 		self::$output = self::$module->getOutput();
 				
 		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_LAST
