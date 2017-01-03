@@ -1,0 +1,10 @@
+0 - <br />
+<b>Notice</b>:  Undefined index: distance in <b>H:\PortableApps\XAMPP\App\xampp\htdocs\dovelocompro\locator.php</b> on line <b>16</b><br />
+<?xml version="1.0"?>
+<markers><marker name="BoscoloRitaLuciana" address="Via Tratturo, Prezza" lat="42.083084" lng="13.855323" distance="2.118562566319531"/></markers>
+0 - <br />
+<b>Notice</b>:  Undefined index: distance in <b>H:\PortableApps\XAMPP\App\xampp\htdocs\dovelocompro\locator.php</b> on line <b>16</b><br />
+<?xml version="1.0"?>
+<markers><marker name="BoscoloRitaLuciana" address="Via Tratturo, Prezza" lat="42.083084" lng="13.855323" distance="2.118562566319531"/></markers>
+0 - <?xml version="1.0"?>
+<markers><marker name="BoscoloRitaLuciana" address="Via Tratturo, Prezza" lat="42.083084" lng="13.855323" distance="3.4094954250902973"/></markers>

@@ -31,7 +31,7 @@ function errorReport($errorMessage, $errorLevel) {
 		$errorLevel = 0; //Unknown error level
 	}
 	
-	$filename = 'errors.log';
+	$filename = __EVA_HOME__ . '/errors.log';
 	
 	if (is_writable($filename)) {
 		if (!$handle = fopen($filename, 'a')) {

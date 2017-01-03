@@ -63,6 +63,8 @@ final class core {
 	}
 	
 	private static function shutdown() {
+		header('Content-Length: ' . strlen(self::$output));
+		header('Vary: Accept-Encoding');
 		echo self::$output;
 	}
 	
