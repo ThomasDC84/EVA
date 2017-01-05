@@ -9,31 +9,35 @@ class dbMysql {
 	private $returnedSet;
 	
 	public function __construct($host, $username, $password, $dbName) {
-		$this->connection = mysqli_connect($host, $username, $password) or die("what?");
-		mysqli_select_db($this->connection, $dbName) or die( "Unable to select database");
+		$this->connection = new \mysqli($host, $username, $password) or die("what?");
+		$this->connection->select_db($dbName) or die( "Unable to select database");
 		if($this->connection === false) {
 			// Handle error - notify administrator, log to a file, show an error screen, etc.
 		}
 	}
 	
-	public function query($query) {
+	public function query($queryString) {
 		$result = false;
-		if($this->returnedSet = mysqli_query($this->connection, $query)) {
+		if($this->returnedSet = $this->connection->query($queryString)) { //return an error here via errorLog
 			$result = true;
 		}
 		return $result;
 	}
 	
 	public function getNumberOfRows() {
-		return mysqli_num_rows($this->returnedSet);
+		$numberOfRows = 0;
+		if(is_object($this->returnedSet)) {
+			$numberOfRows = $this->returnedSet->num_rows;
+		}
+		return $numberOfRows;
 	}
 		
 	public function fetchResults() {
-		return mysqli_fetch_array( $this->returnedSet, MYSQL_ASSOC );		
+		return $this->returnedSet->fetch_assoc();		
 	}
 	
 	public function __destruct() {
-		mysqli_close($this->connection);
+		$this->connection->close();
 	}
 }
 

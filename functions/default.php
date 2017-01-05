@@ -79,4 +79,15 @@ function parse_template($tags, $replacements, $template = '')
 	return $template;
 }
 
+function escapeString($string) {
+    $search = array("\\"      ,  "\_",   "\%", "\x00",   "\b",  "\n",  "\t",   "\r",  "'",  '"', "\x1a");
+    $replace = array("\\\\", "\\_", "\\%",    "\\0", "\\b","\\n", "\\t", "\\r", "\'", '\"', "\\Z");
+
+    $string = str_replace($search, $replace, $string);
+	
+	$string = htmlentities($string);
+	
+	return $string;
+}
+
 ?>
