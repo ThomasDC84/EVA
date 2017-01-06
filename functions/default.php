@@ -25,30 +25,6 @@ function evaAutoCall($className) {
 
 spl_autoload_register('evaAutoCall');
 
-function errorReport($errorMessage, $errorLevel) {
-	
-	if(!(ctype_digit($errorLevel) and ($errorLevel < 4))) {
-		$errorLevel = 0; //Unknown error level
-	}
-	
-	$filename = __EVA_HOME__ . '/errors.log';
-	
-	if (is_writable($filename)) {
-		if (!$handle = fopen($filename, 'a')) {
-			echo "Cannot open file ($filename)";
-			exit;
-		}
-		if (fwrite($handle, $errorLevel . ' - ' . $errorMessage) === FALSE) {
-			echo "Cannot write to file ($filename)";
-			exit;
-		}
-		fclose($handle);
-	}
-	else {
-		echo "The file $filename is not writable";
-	}
-}
-
 function url_origin( $s, $use_forwarded_host = false )
 {
     $ssl      = ( ! empty( $s['HTTPS'] ) && $s['HTTPS'] == 'on' );
