@@ -8,8 +8,43 @@ body {
     color:#333
 }
 
+h1 {
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+	 text-align: center;
+}
+
 p {
     padding: 10px;
+}
+
+fieldset {
+  margin: 10px;
+  margin-top: 20px;
+  padding: 0 10px 10px;
+  border: 1px solid #666;
+  border-radius: 4px;
+  /* box-shadow: 0 0 10px #666; */
+  padding-top: 10px;
+}
+legend {
+  border: 1px solid #666;
+  border-radius: 4px;
+  padding: 2px 4px;
+  background: #fff;
+  /* For better legibility against the box-shadow */
+}
+fieldset > legend {
+  float: left;
+  margin-top: -20px;
+}
+fieldset > legend + * {
+  clear: both;
 }
 
 #wrapper {
@@ -29,6 +64,8 @@ p {
     border-radius: 10px;
     border: 1px solid #dbdbdb;
     margin: 5px;
+	 text-align: center;
+	vertical-align: middle;
 }
 
 #contentwrap {
@@ -70,5 +107,6 @@ p {
     border-radius: 10px;
     border: 1px solid #dbdbdb;
     margin: 5px;
+	 text-align: center;
 }
 

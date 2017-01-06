@@ -14,7 +14,7 @@ class report {
 	}
 	
 	public function addContents($errorLevel, $contents) {
-		$this->contents .= '######## NEW ENTRY AT ' . date(DATE_ATOM) . " WITH ERRORLEVEL: $errorLevel ########\n\n" . $contents . "\n\n";
+		$this->contents .= '######## New entry at ' . date(DATE_ATOM) . " with error level: $errorLevel ########\n\n" . $contents . "\n\n";
 	}
 	
 	public function __destruct() {

@@ -32,8 +32,8 @@ class templateHTML implements iTemplate {
 	}
 	
 	public function getOutput() {
-		$this->output = str_replace(array('%{title}%', '%{descritpion}%', '%{contents}%'),
-									array($this->title, $this->description, $this->contents),
+		$this->output = str_replace(array('%{title}%', '%{descritpion}%', '%{contents}%', '%{EVA_URL}%'),
+									array($this->title, $this->description, $this->contents, settings::getConf('General', 'eva_url')),
 									$this->output);
 		if(sidebarManager::getNumberOfSidebars() > 0) {
 			foreach(sidebarManager::getSidebars() as $sidebar) {

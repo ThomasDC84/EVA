@@ -43,17 +43,22 @@ class sidebar implements iSidebar {
 	}
 	
 	public function getContents() {
-		$this->contents = '<table style="width:100%">';
 		foreach($this->widgets as $widget) {
-			$this->contents .= 
-				'<tr>
-					<th>'.$widget->getTitle().'</th>
-				</tr>
-				<tr>
-					<td style="text-align: center;">'.$widget->getContents().'</td>
-				</tr>';
+			if($widget->putInTemplate() == true) {
+				$this->contents = 
+					'<table style="width:100%">
+					<tr>
+						<th>'.$widget->getTitle().'</th>
+					</tr>
+					<tr>
+						<td style="text-align: center;">'.$widget->getContents().'</td>
+					</tr>
+					</table>';
+			}
+			else {
+				$this->contents = $widget->getContents();
+			}
 		}
-		$this->contents .= '</table>';
 		return $this->contents;
 	}
 }

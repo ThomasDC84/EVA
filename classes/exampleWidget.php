@@ -24,6 +24,10 @@ class exampleWidget implements iWidget {
 	public function setContents() {
 		$this->contents = $contents;		
 	}
+	
+	public function putInTemplate() {
+		return true;
+	}
 
 }
 
