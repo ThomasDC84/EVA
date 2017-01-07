@@ -31,6 +31,20 @@ class templateHTML implements iTemplate {
 		$this->contents = $contents;		
 	}
 	
+	public function getSection($sectionName) {
+		$section = '';
+		$start = '<!--' . $sectionName . '-->';
+		$end = '<!--/' . $sectionName . '-->';
+		$ini = strpos($this->output, $start);
+		if ($ini !== 0) {
+			$ini += strlen($start);
+			$len = strpos($this->output, $end, $ini) - $ini;
+			$section = substr($this->output, $ini, $len);
+			$this->output = str_replace(array($start, $end, $section), '', $this->output);
+		}
+		return $section;
+	}
+	
 	public function getOutput() {
 		$this->output = str_replace(array('%{title}%', '%{descritpion}%', '%{contents}%', '%{EVA_URL}%'),
 									array($this->title, $this->description, $this->contents, settings::getConf('General', 'eva_url')),

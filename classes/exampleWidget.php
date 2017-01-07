@@ -4,9 +4,14 @@ namespace EVA;
 
 class exampleWidget implements iWidget {
 	
+	private $title;
+	private $contents;
+	private $putInTemplate;
+	
 	public function __construct($title = '', $contents = '') {
 		$this->title = $title;
 		$this->contents = $contents;
+		$this->putInTemplate = true;
 	}
 	
     public function getTitle() {
@@ -25,8 +30,17 @@ class exampleWidget implements iWidget {
 		$this->contents = $contents;		
 	}
 	
+	public function setPutInTemplate($bool) {
+		if($bool == true) {
+			$this->putInTemplate  = true;
+		}
+		else {
+			$this->putInTemplate  = false;
+		}
+	}
+	
 	public function putInTemplate() {
-		return true;
+		return $this->putInTemplate;
 	}
 
 }

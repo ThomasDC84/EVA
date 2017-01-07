@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<title>%{title}%</title>
+		<meta name="description" content="%{description}%"/>
+		<link rel="icon" type="image/png" href="%{EVA_URL}%/modules/userLogManager/favicon.png" />
+		<script>function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+} </script>
+	</head>
+		<body>
+		<div>
+			%{contents}%
+			<!--logInForm-->
+				<div style="margin: 0 auto; text-align: center; width: 500px">
+					<form method="post" action="index.php?action=login&referer=%{$referer}%">
+						<fieldset>
+							<legend>%{Login Form:}%</legend>
+							<label for="userName">%{User Name:}%</label><br/>
+							<input type="text" id="userName" name="userName"><br/>
+							<label for="password">%{Password:}%</label><br/>
+							<input type="password" id="password" name="password"><br/>
+							<input type="submit" value="%{LogIn}%">
+							<input type="reset" value="%{Reset}%">
+						</fieldset>
+					</form>
+				</div>
+			<!--/logInForm-->
+		</div>
+	</body>
+</html>

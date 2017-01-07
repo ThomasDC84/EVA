@@ -8,19 +8,19 @@ define('HOOK_LAST', 4);
 function evaAutoCall($className) {
 	$className = str_ireplace('EVA\\', '', $className);
 	if(file_exists(__EVA_HOME__ . '/classes/' . $className . '.php')) {
-		include_once __EVA_HOME__ . '/classes/' . $className . '.php';
+		require_once __EVA_HOME__ . '/classes/' . $className . '.php';
 	}
 	elseif(file_exists(__EVA_HOME__ . '/modules/' . $className . '/module.php')) {
-		include_once __EVA_HOME__ . '/modules/' . $className . '/module.php';
+		require_once __EVA_HOME__ . '/modules/' . $className . '/module.php';
 	}
 	elseif(file_exists(__EVA_HOME__ . '/plugins/' . $className . '/plugin.php')) {
-		include_once __EVA_HOME__ . '/plugins/' . $className . '/plugin.php';
+		require_once __EVA_HOME__ . '/plugins/' . $className . '/plugin.php';
 	}
-	else {
+	/*else {
 		spl_autoload_unregister('evaAutoCall');
 		spl_autoload_call($className);
 		spl_autoload_register('evaAutoCall');
-	}
+	}*/
 }
 
 spl_autoload_register('evaAutoCall');

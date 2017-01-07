@@ -25,8 +25,8 @@ class logUser {
 	}
 	
 	public static function logout() {
-		setcookie('userName', '', time() - 3600);
-		setcookie('password', '',  time() - 3600);
+		setcookie('userName', '', time() - 3600, '/');
+		setcookie('password', '',  time() - 3600, '/');
 	}
 	
 	public static function getUser($userName, $password, $cookieAccess = false) {
@@ -40,8 +40,8 @@ class logUser {
 			self::$db->getNumberOfRows() != 0) {
 			$r = self::$db->fetchResults();
 			$user = new user($r['userName'], $r['email']);
-			setcookie('userName', $userName);
-			setcookie('password', $password);
+			setcookie('userName', $userName, time()+86400, '/');
+			setcookie('password', $password, time()+86400, '/');
 		}
 		return $user;
 	}

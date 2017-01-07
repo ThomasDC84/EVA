@@ -4,7 +4,7 @@ namespace EVA;
 
 include __EVA_HOME__ . '/modules/reportViewer/reportListWidget.php';
 
-class page implements iModules {
+class reportViewer implements iModules {
 	
 	private $id;
 	private $title;
@@ -14,31 +14,38 @@ class page implements iModules {
 	
 	public function __construct() {
 		
-		$locale = 'it_IT';
-		if (isSet($_GET["locale"])) $locale = $_GET["locale"];
-
-		$domain = 'reportViewer';
-
-		$results = putenv("LC_ALL=$locale");
-		if (!$results) {
-			exit ('putenv failed');
+		$user = logUser::login();
+		if(!$user) {
+			header('Refresh: 5; URL=/ulm/index.php?referer=/reportViewer/index.php');
 		}
+		else {
+			
+			$locale = 'it_IT';
+			if (isSet($_GET["locale"])) $locale = $_GET["locale"];
 
-		$results = setlocale(LC_ALL, $locale, 'italian');
-		if (!$results) {
-			exit ('setlocale failed: locale function is not available on this platform, or the given local does not exist in this environment');
+			$domain = 'reportViewer';
+
+			$results = putenv("LC_ALL=$locale");
+			if (!$results) {
+				exit ('putenv failed');
+			}
+
+			$results = setlocale(LC_ALL, $locale, 'italian');
+			if (!$results) {
+				exit ('setlocale failed: locale function is not available on this platform, or the given local does not exist in this environment');
+			}
+
+			bindtextdomain($domain, __EVA_HOME__ . '/locale');
+
+			textdomain($domain);
+			
+			$db = dbFactory::buildDefaultDB();
+			$this->title = gettext('System Report Viewer');
+			$this->description = gettext('System Report Viewer');
+			$this->contents = '<p>' . gettext('No report selected to show') . '</p>';
+			$this->readLog();
+			$this->deleteLogs();
 		}
-
-		bindtextdomain($domain, __EVA_HOME__ . '/locale');
-
-		textdomain($domain);
-		
-		$db = dbFactory::buildDefaultDB();
-		$this->title = gettext('System Report Viewer');
-		$this->description = gettext('System Report Viewer');
-		$this->contents = '<p>' . gettext('No report selected to show') . '</p>';
-		$this->readLog();
-		$this->deleteLogs();
 	}
 	
 	private function readLog() {
@@ -103,11 +110,20 @@ class page implements iModules {
 				
 		$reportListWidget = new reportListWidget();
 		
-		$sidebar = new sidebar('rightSideBar');
+		$rightSidebar = new sidebar('rightSideBar');
 		
-		$sidebar->addWidget($reportListWidget, 1);
+		$rightSidebar->addWidget($reportListWidget, 1);
 		
-		sidebarManager::addSidebar($sidebar);
+		$userWidget = new exampleWidget('user', gettext('Logged as: ') . logUser::login()->getUserName() . ' ');
+		
+		$userWidget->setPutInTemplate(false);
+		
+		$footerSidebar = new sidebar('footerSideBar');
+		
+		$footerSidebar->addWidget($userWidget, 1);
+		
+		sidebarManager::addSidebar($rightSidebar);
+		sidebarManager::addSidebar($footerSidebar);
 		
 		$this->output = $template->getOutput();		
 	}

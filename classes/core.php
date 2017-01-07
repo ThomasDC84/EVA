@@ -45,6 +45,10 @@ final class core {
 		if(class_exists($m)) {
 			self::$module = new $m();
 		}
+		elseif(class_exists('EVA\\'.$m)) { //this is crucial for namespace compatiblity
+			$m = 'EVA\\'.$m;
+			self::$module = new $m();
+		}
 		else {
 			self::$module = new page();
 		}
