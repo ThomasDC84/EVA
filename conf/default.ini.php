@@ -4,7 +4,7 @@
 defaultDB = MySQL
 ;defaultDB = SQLite3
 defaultTemplate = HTML
-eva_url = "/eva/"
+eva_url = "/eva"
 
 [MySQL]
 host = "localhost"
