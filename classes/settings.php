@@ -4,30 +4,31 @@ namespace EVA;
 
 final class settings {
 	
-	protected static $language;
 	protected static $charset;
 	protected static $encoding;
 	protected static $config;
+	protected static $db;
 	
 	public static function boot() {
-		
-		self::$config = parse_ini_file(__EVA_HOME__ . '/conf/default.ini.php', true); 
-		
-		self::$language = \conNeg::langBest('it,en;q=0.7');
-		self::$charset = \conNeg::charBest('UTF-8,iso-8859-1;q=0.9,UTF-16;q=0.5');
+		self::$db = dbFactory::buildDefaultDB();
+		self::$config = array();
+		if(self::$db->query('SELECT * FROM `settings`') and
+			self::$db->getNumberOfRows() != 0) {
+			while($r = self::$db->fetchResults()) {
+				self::$config[$r['name']] = $r['value'];
+			}
+		}
+		self::$charset = \conNeg::charBest(self::$config['preferredCharset']); //from db settings
 		if(self::$charset == NULL) {
 			self::$charset = 'utf-8';
 		}
-		self::$encoding = \conNeg::encBest('gzip, deflate;q=0.6');
+		self::$encoding = \conNeg::encBest(self::$config['preferredEncoding']); //from settings
 	}
 	
-	public static function getConf($parameter, $subparam = null) {
+	public static function getConf($parameter) {
 		$cfg = false;
-		if($subparam == null and isset(self::$config[$parameter])) {
+		if(isset(self::$config[$parameter])) {
 			$cfg = self::$config[$parameter];
-		}
-		if(isset(self::$config[$parameter][$subparam])) {
-			$cfg = self::$config[$parameter][$subparam];
 		}
 		return $cfg;
 	}

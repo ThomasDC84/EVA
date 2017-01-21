@@ -16,8 +16,8 @@ final class core {
 	
 	public static function boot() {
 		
-		settings::boot();
 		dbFactory::boot();
+		settings::boot();
 		
 		self::$pmToken = rand();
 		self::$pluginManager = new pluginManager(self::$pmToken);

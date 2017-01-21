@@ -40,8 +40,8 @@ class ulm implements iModules {
 			}
 			
 			$this->contents = str_replace(
-				array('%{Login Form:}%', '%{User Name:}%', '%{Password:}%', '%{LogIn}%', '%{Reset}%', $refererPrefix.'%{$referer}%'),
-				array(gettext('Login Form:'), gettext('User Name:'), gettext('Password:'), gettext('Log In'), gettext('Reset'), $referer),
+				array('%{Login}%', '%{User Name:}%', '%{Password:}%', '%{LogIn}%', '%{Reset}%', $refererPrefix.'%{$referer}%'),
+				array(gettext('Login'), gettext('User Name:'), gettext('Password:'), gettext('Log In'), gettext('Reset'), $referer),
 				$this->contents);
 		}
 		else {

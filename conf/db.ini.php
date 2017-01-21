@@ -3,8 +3,6 @@
 [General]
 defaultDB = MySQL
 ;defaultDB = SQLite3
-defaultTemplate = HTML
-eva_url = "/eva"
 
 [MySQL]
 host = "localhost"
@@ -16,7 +14,3 @@ socket = ""
 
 [SQLite3]
 dbname = eva
-
-[Plugins]
-;NBBC Parser = nbbc
-GZ Compressor = EVA\gzcompressor

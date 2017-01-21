@@ -4,39 +4,50 @@
 		<title>%{title}%</title>
 		<meta name="description" content="%{description}%"/>
 		<link rel="icon" type="image/png" href="%{EVA_URL}%/modules/ulm/favicon.png" />
-		<script>function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-} </script>
+		<style>
+			form.style1 fieldset {
+				padding: 1em;
+				font:80%/1 sans-serif;
+				}
+			form.style1 label {
+				float:left;
+				width:25%;
+				margin-right:0.5em;
+				padding-top:0.2em;
+				text-align:right;
+				font-weight:bold;
+				}
+
+			form.style2 fieldset {
+				border:1px solid green;
+				}
+			form.style2 legend {
+				padding: 0.2em 0.5em;
+				border:1px solid green;
+				color:green;
+				font-size:90%;
+				text-align:right;
+				}
+
+		</style>
 	</head>
-		<body>
+	<body>
 		<div>
 			%{contents}%
 			<!--logInForm-->
-				<div style="margin: 0 auto; text-align: center; width: 500px">
-					<form method="post" action="index.php?action=login&referer=%{$referer}%">
-						<fieldset>
-							<legend>%{Login Form:}%</legend>
-							<label for="userName">%{User Name:}%</label><br/>
-							<input type="text" id="userName" name="userName"><br/>
-							<label for="password">%{Password:}%</label><br/>
-							<input type="password" id="password" name="password"><br/>
-							<input type="submit" value="%{LogIn}%">
-							<input type="reset" value="%{Reset}%">
-						</fieldset>
-					</form>
-				</div>
+			<div style="margin: 0 auto; width: 500px">
+				<form method="post" action="index.php?action=login&referer=%{$referer}%" class="style1 style2">
+					<fieldset>
+						<legend>%{Login}%</legend>
+						<label for="userName">%{User Name:}%</label>
+						<input type="text" id="userName" name="userName"><br/>
+						<label for="password">%{Password:}%</label>
+						<input type="password" id="password" name="password"><br/><br/>
+						<input type="submit" value="%{LogIn}%">
+						<input type="reset" value="%{Reset}%">
+					</fieldset>
+				</form>
+			</div>
 			<!--/logInForm-->
 		</div>
 	</body>

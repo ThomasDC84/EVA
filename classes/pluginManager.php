@@ -11,10 +11,15 @@ class pluginManager implements \SplSubject {
 		$this->_token = $token;
         $this->_plugins = new \SplObjectStorage();
 		//load plugins list, require db
-		foreach(settings::getConf('Plugins') as $plugin) {
-			if(class_exists($plugin)) {
-				$this->attach(new $plugin());
-			}			
+		$db = dbFactory::buildDefaultDB();
+		$plugins = array();
+		if($db->query('SELECT * FROM `plugins`') and
+			$db->getNumberOfRows() != 0) {
+			while($plugin = $db->fetchResults()) {
+				if($plugin['enabled'] == 1 and class_exists($plugin['ID'])) {
+					$this->attach(new $plugin['ID']());
+				}	
+			}
 		}
     }
 

@@ -28,7 +28,7 @@ class page implements iModules {
 	}
 	
 	private function detectID() {
-		$cpn = array('/index.php', '/index.html', '/index.htm', '/index.shtml');
+		$cpn = array('/index.php', '/index.html', '/index.htm', '/index.shtml'); //cpn = common pages name
 		$id = str_ireplace($cpn, '', $_SERVER['REQUEST_URI']);
 		$id = trim($id, '/');
 		$id = explode('/', $id);

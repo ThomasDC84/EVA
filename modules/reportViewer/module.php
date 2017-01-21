@@ -114,7 +114,12 @@ class reportViewer implements iModules {
 		
 		$rightSidebar->addWidget($reportListWidget, 1);
 		
-		$userWidget = new exampleWidget('user', gettext('Logged as: ') . logUser::login()->getUserName() . ' ');
+		if(logUser::login() == false) {
+			$userWidget = new exampleWidget('user', gettext('Logged as: ') . gettext('Anonymous User'));
+		}
+		else {
+			$userWidget = new exampleWidget('user', gettext('Logged as: ') . logUser::login()->getUserName() . ' ');
+		}
 		
 		$userWidget->setPutInTemplate(false);
 		
