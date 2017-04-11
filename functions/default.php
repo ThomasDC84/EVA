@@ -10,20 +10,30 @@ function evaAutoCall($className) {
 	if(file_exists(__EVA_HOME__ . '/classes/' . $className . '.php')) {
 		require_once __EVA_HOME__ . '/classes/' . $className . '.php';
 	}
-	elseif(file_exists(__EVA_HOME__ . '/modules/' . $className . '/module.php')) {
-		require_once __EVA_HOME__ . '/modules/' . $className . '/module.php';
+	elseif(file_exists(__EVA_HOME__ . '/modules/' . $className . '/' . $className . '.php')) {
+		require_once __EVA_HOME__ . '/modules/' . $className . '/' . $className . '.php';
 	}
-	elseif(file_exists(__EVA_HOME__ . '/plugins/' . $className . '/plugin.php')) {
-		require_once __EVA_HOME__ . '/plugins/' . $className . '/plugin.php';
+	elseif(file_exists(__EVA_HOME__ . '/plugins/' . $className . '/' . $className . '.php')) {
+		require_once __EVA_HOME__ . '/plugins/' . $className . '/' . $className . '.php';
 	}
-	/*else {
-		spl_autoload_unregister('evaAutoCall');
-		spl_autoload_call($className);
-		spl_autoload_register('evaAutoCall');
-	}*/
 }
 
 spl_autoload_register('evaAutoCall');
+
+function callSubModule($subModuleName) {
+	$result = false;
+	if(file_exists(__EVA_HOME__ . '/modules/' . EVA\core::getModuleName() . '/subModules/' . $subModuleName . '.php')) {
+		require_once __EVA_HOME__ . '/modules/' . EVA\core::getModuleName() . '/subModules/' . $subModuleName . '.php';
+		if(class_exists($subModuleName)) {
+			$result = new $subModuleName();
+		}
+		elseif(class_exists('EVA\\' . $subModuleName)) {
+			$subModuleName = 'EVA\\' . $subModuleName;
+			$result = new $subModuleName();
+		}
+	}
+	return $result;
+}
 
 function url_origin( $s, $use_forwarded_host = false )
 {

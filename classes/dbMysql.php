@@ -9,9 +9,9 @@ class dbMysql {
 	private $returnedSet;
 	
 	public function __construct($host, $username, $password, $dbName) {
-		$this->connection = new \mysqli($host, $username, $password) or die("what?");
-		$this->connection->select_db($dbName) or die( "Unable to select database");
+		$this->connection = new \mysqli($host, $username, $password, $dbName) or die("what?");
 		if($this->connection === false) {
+			exit('connection false');
 			// Handle error - notify administrator, log to a file, show an error screen, etc.
 		}
 	}

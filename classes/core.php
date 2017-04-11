@@ -10,6 +10,8 @@ final class core {
 	
 	private static $module;
 	
+	private static $moduleName;
+	
 	private static $output;
 	
 	private static $pmToken;
@@ -41,13 +43,14 @@ final class core {
 	
 	private static function loadModule() {
 		$m = explode('/', $_SERVER['REQUEST_URI']);
-		$m = $m[1];
-		if(class_exists($m)) {
-			self::$module = new $m();
+		self::$moduleName = $m[1];
+		
+		if(class_exists(self::$moduleName)) {
+			self::$module = new self::$moduleName();
 		}
-		elseif(class_exists('EVA\\'.$m)) { //this is crucial for namespace compatiblity
-			$m = 'EVA\\'.$m;
-			self::$module = new $m();
+		elseif(class_exists('EVA\\'.self::$moduleName)) { //this is crucial for namespace compatiblity
+			self::$moduleName = 'EVA\\'.self::$moduleName;
+			self::$module = new self::$moduleName();
 		}
 		else {
 			self::$module = new page();
@@ -56,6 +59,10 @@ final class core {
 	
 	public static function getModule() {
 		return self::$module;
+	}
+	
+	public static function getModuleName() {
+		return self::$moduleName;
 	}
 	
 	public static function getOutput() {

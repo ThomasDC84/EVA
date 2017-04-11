@@ -12,17 +12,17 @@ final class settings {
 	public static function boot() {
 		self::$db = dbFactory::buildDefaultDB();
 		self::$config = array();
-		if(self::$db->query('SELECT * FROM `settings`') and
+		if(false !== self::$db->query('SELECT * FROM `settings`') and
 			self::$db->getNumberOfRows() != 0) {
 			while($r = self::$db->fetchResults()) {
 				self::$config[$r['name']] = $r['value'];
 			}
 		}
-		self::$charset = \conNeg::charBest(self::$config['preferredCharset']); //from db settings
+		self::$charset = \conNeg::charBest(self::$config['preferredCharset']);
 		if(self::$charset == NULL) {
 			self::$charset = 'utf-8';
 		}
-		self::$encoding = \conNeg::encBest(self::$config['preferredEncoding']); //from settings
+		self::$encoding = \conNeg::encBest(self::$config['preferredEncoding']);
 	}
 	
 	public static function getConf($parameter) {
@@ -63,8 +63,10 @@ final class settings {
 			
 	}
 	
-	public static function setCookie($cookieName, $value = "", $expire = 0, $path = "", $domain = "", $secure = false, $httponly = false) {
-		return setCookie($cookieName, $value, $expire, $path, $domain, $secure, $httponly);
+	public static function setCookie($cookieName, $value = "", $expire = 0,
+		$path = "", $domain = "", $secure = false, $httponly = false) {
+		return setCookie($cookieName, $value, $expire, $path, $domain, $secure,
+		$httponly);
 	}
 }
 

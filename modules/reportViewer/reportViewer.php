@@ -16,7 +16,11 @@ class reportViewer implements iModules {
 		
 		$user = logUser::login();
 		if(!$user) {
-			header('Refresh: 5; URL=/ulm/index.php?referer=/reportViewer/index.php');
+			$this->title = gettext('System Report Viewer');
+			$this->description = gettext('System Report Viewer');
+			$this->contents = gettext('Access Denied') . '. ' . 
+				gettext('Please authenticate yourself in the') . ' <a href="/ulm/index.php?referer=/reportViewer/index.php">' .
+				gettext('authentication page') . '</a>.';
 		}
 		else {
 			
@@ -102,33 +106,34 @@ class reportViewer implements iModules {
 	}
 	
 	public function prepare() {
-		$template = templateFactory::buildTemplate('HTML');		
-		$template->setTemplate(__EVA_HOME__ . '/modules/reportViewer/template.htm');
+		$template = templateFactory::buildTemplate('HTML');
+		
+		if(logUser::login() == false) {
+			$template->setTemplate(__EVA_HOME__ . '/modules/reportViewer/accessDenied.htm');
+		}
+		else {
+			$template->setTemplate(__EVA_HOME__ . '/modules/reportViewer/template.htm');
+				
+			$reportListWidget = new reportListWidget();
+			
+			$rightSidebar = new sidebar('rightSideBar');
+			
+			$rightSidebar->addWidget($reportListWidget, 1);
+			$userWidget = new exampleWidget('user', gettext('Logged as: ') . logUser::login()->getUserName() . ' ');
+			$userWidget->setPutInTemplate(false);
+			
+			
+			$footerSidebar = new sidebar('footerSideBar');
+			
+			$footerSidebar->addWidget($userWidget, 1);
+			
+			sidebarManager::addSidebar($rightSidebar);
+			sidebarManager::addSidebar($footerSidebar);
+		}
+		
 		$template->setTitle($this->title);
 		$template->setDescription($this->description);
 		$template->setContents($this->contents);
-				
-		$reportListWidget = new reportListWidget();
-		
-		$rightSidebar = new sidebar('rightSideBar');
-		
-		$rightSidebar->addWidget($reportListWidget, 1);
-		
-		if(logUser::login() == false) {
-			$userWidget = new exampleWidget('user', gettext('Logged as: ') . gettext('Anonymous User'));
-		}
-		else {
-			$userWidget = new exampleWidget('user', gettext('Logged as: ') . logUser::login()->getUserName() . ' ');
-		}
-		
-		$userWidget->setPutInTemplate(false);
-		
-		$footerSidebar = new sidebar('footerSideBar');
-		
-		$footerSidebar->addWidget($userWidget, 1);
-		
-		sidebarManager::addSidebar($rightSidebar);
-		sidebarManager::addSidebar($footerSidebar);
 		
 		$this->output = $template->getOutput();		
 	}

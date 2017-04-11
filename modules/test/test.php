@@ -59,6 +59,57 @@ class test implements iModules {
 		$this->output .= '<br>';
 		$this->output .= gettext('No report selected to show');
 		
+		$bestType                           = 'en';
+        $parsedTypes                        = array();
+
+        $parsedTypes['type'][0]             = 'en';
+        $parsedTypes['qFactorUser'][0]      = '1';
+
+        $parsedTypes['type'][1]             = 'it_IT';
+        $parsedTypes['qFactorUser'][1]      = '0.3';
+
+        $parsedTypes['type'][2]             = 'it';
+        $parsedTypes['qFactorUser'][2]      = '0.2';
+		
+		echo '<pre>';
+		
+		echo 'string(5) "it-it"
+array(2) {
+  ["type"]=>
+  array(4) {
+    [0]=>
+    string(5) "it-it"
+    [1]=>
+    string(2) "it"
+    [2]=>
+    string(5) "en-us"
+    [3]=>
+    string(2) "en"
+  }
+  ["qFactorUser"]=>
+  array(4) {
+    [0]=>
+    string(1) "1"
+    [1]=>
+    string(3) "0.8"
+    [2]=>
+    string(3) "0.5"
+    [3]=>
+    string(3) "0.3"
+  }
+}';
+
+echo "\n\n";
+		
+		var_dump(\conNeg::langBest());
+		var_dump(\conNeg::langAll());
+		
+		 $appPref = 'iso-8859-5;q=0.9,utf-8;q=0.6';
+		 var_dump(\conNeg::charBest($appPref));
+		 var_dump(\conNeg::charAll());
+		
+		echo '</pre>';
+		
 	}
 	
 	public function getOutput() {
