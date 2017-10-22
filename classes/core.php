@@ -17,9 +17,13 @@ final class core {
 	private static $pmToken;
 	
 	public static function boot() {
+	
+		error_reporting(E_ALL);
+		ini_set('display_errors', 1);
 		
 		dbFactory::boot();
 		settings::boot();
+		nativeLanguageSupport::boot();
 		
 		self::$pmToken = rand();
 		self::$pluginManager = new pluginManager(self::$pmToken);

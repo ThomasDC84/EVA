@@ -7,7 +7,7 @@ defaultDB = MySQL
 [MySQL]
 host = "localhost"
 username = "root"
-password = ""
+password = "thomas"
 dbname = "eva"
 port = ""
 socket = ""

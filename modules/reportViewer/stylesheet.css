@@ -69,7 +69,7 @@ fieldset > legend + * {
 }
 
 #contentwrap {
-    width: 650px;
+    width: 620px;
     float: left;
     margin: 0 auto;
 }
@@ -82,7 +82,7 @@ fieldset > legend + * {
 }
 
 #leftcolumnwrap {
-    width: 350px;
+    width: 380px;
     float: left;
     margin: 0 auto;
 }

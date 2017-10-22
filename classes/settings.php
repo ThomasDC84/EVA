@@ -20,7 +20,7 @@ final class settings {
 		}
 		self::$charset = \conNeg::charBest(self::$config['preferredCharset']);
 		if(self::$charset == NULL) {
-			self::$charset = 'utf-8';
+			self::$charset = 'utf8';
 		}
 		self::$encoding = \conNeg::encBest(self::$config['preferredEncoding']);
 	}

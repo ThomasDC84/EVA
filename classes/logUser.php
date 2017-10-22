@@ -17,9 +17,7 @@ class logUser {
 		self::$dbType = settings::getConf('General', 'defaultDB');
 		self::$db = dbFactory::buildDefaultDB();
 		if(!($user = self::getUserFromCookie())) {
-			if(isset($_POST["userName"]) and isset($_POST["password"])) {
-				$user = self::getUserFromPOST();
-			}
+			$user = self::getUserFromPOST();
 		}
 		return $user;
 	}
@@ -47,6 +45,8 @@ class logUser {
 	}
 	
 	public static function getUserFromPOST() {
+		$userName = '';
+		$password = '';
 		if(isset($_POST['userName']) and isset($_POST['password'])) {
 			$userName = $_POST['userName'];
 			$password = $_POST['password'];

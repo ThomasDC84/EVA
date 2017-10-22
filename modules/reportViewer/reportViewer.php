@@ -23,21 +23,7 @@ class reportViewer implements iModules {
 				gettext('authentication page') . '</a>.';
 		}
 		else {
-			
-			$locale = 'it_IT';
-			if (isSet($_GET["locale"])) $locale = $_GET["locale"];
-
 			$domain = 'reportViewer';
-
-			$results = putenv("LC_ALL=$locale");
-			if (!$results) {
-				exit ('putenv failed');
-			}
-
-			$results = setlocale(LC_ALL, $locale, 'italian');
-			if (!$results) {
-				exit ('setlocale failed: locale function is not available on this platform, or the given local does not exist in this environment');
-			}
 
 			bindtextdomain($domain, __EVA_HOME__ . '/locale');
 

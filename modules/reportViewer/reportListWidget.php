@@ -35,6 +35,8 @@ class reportListWidget implements iWidget {
 				$this->files[] = $file;
 			}
 		}
+		sort($this->files);
+		$this->files = array_reverse($this->files);
 	}
 	
     public function getTitle() {
