@@ -1,16 +1,41 @@
 <?php
 
+/**
+
+    This file is part of EVA PHP Web Engine.
+
+    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    
+**/
+
 namespace EVA;
 
 class user {
+	
+	private $userLog;
 
+	private $userDomain;
+	
 	private $userName;
 	
 	private $email;
 	
 	private $data;
 
-	public function __construct($userName, $email) {
+	public function __construct($userLog, $userDomain, $userName, $email) {
+		$this->userLog = $userLog;
+		$this->userDomain = $userDomain;
 		$this->userName = $userName;
 		$this->email = $email;
 	}
@@ -23,6 +48,10 @@ class user {
 		return $this->email;
 	}
 	
+	public function getLanguage() {
+		return $this->language;
+	}
+	
 	public function setData($name, $value) {
 		$this->data[$name] = $value;
 	}
@@ -33,6 +62,10 @@ class user {
 			$data = $this->data[$name];
 		}
 		return $data;
+	}
+	
+	public function logout() {
+		$this->userLog->out();
 	}
 
 }

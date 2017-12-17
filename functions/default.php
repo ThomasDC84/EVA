@@ -1,5 +1,25 @@
 <?php
 
+/**
+
+    This file is part of EVA PHP Web Engine.
+
+    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    
+**/
+
+define('__EVA_DEFAULT_DATABASE_FORMAT__', true);
 define('HOOK_FIRST', 1);
 define('HOOK_CONTENTS', 2);
 define('HOOK_OUTPUT', 3);
@@ -52,7 +72,14 @@ function full_url( $s, $use_forwarded_host = false )
     return url_origin( $s, $use_forwarded_host ) . $s['REQUEST_URI'];
 }
 
-function parse_template($tags, $replacements, $template = '')
+function get_template($tag, $html) {
+	$startsAt = strpos($html, '<!--'.$tag.'-->') + strlen('<!--'.$tag.'-->');
+	$endsAt = strpos($html, '<!--/'.$tag.'-->', $startsAt);
+	$result = substr($html, $startsAt, $endsAt - $startsAt);
+	return $result;
+}
+
+function parse_template($tags, $replacements, $template = '', $tagType = 1)
 {
 	$tagsLength = count($tags);
 	for($i=0; $i<$tagsLength; $i++) {

@@ -1,73 +1,44 @@
 <?php
 
+/**
+
+    This file is part of EVA PHP Web Engine.
+
+    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    
+**/
+
 namespace EVA;
 
 class nativeLanguageSupport {
 	
-	private static $language;
-	private static $domains;
+	private $language;
+	private $domains;
+	private $settings;
 	
-	public static function boot() {
-		self::$language = self::detectLanguage();
-		self::setLanguage(self::$language);
+	public function __construct($module) {
+		$this->settings = $module->getSettingsManager();
+		
+		$this->language = $this->detectLanguage();
+		$this->setLanguage($this->language);
+		
+		bindtextdomain($module->getLanguageDomain(), $module->getTextDomain());
+		textdomain($module->getLanguageDomain());
+		
 	}
 	
-	public static function setLanguage($language) {
-		$retval = false;
-		if(locale::check($language) != false) {
-			self::$language = $language;
-		}
-		$results = setlocale(LC_ALL, $language . '.' . settings::getCharset(), locale::check($language));
-		if (!$results) {
-			/*reporter::getReport('NLS Analisys')->addContents(0,
-			'setlocale failed with ' . $results . ': locale function is not available on this platform,
-			or the given local does not exist in this environment: ' . $language . '.' . settings::getCharset());*/
-			
-			$results = setlocale(LC_ALL,
-				settings::getConf('defaultLanguage') . '.' . settings::getCharset(), locale::check($language));
-				
-			if (!$results) {
-				reporter::getReport('NLS Analisys')->addContents(0,
-				'setlocale failed with ' . $results . ': locale function is not available on this platform,
-				or the given local does not exist in this environment: ' . 
-				settings::getConf('defaultLanguage') . '.' . settings::getCharset());
-			}
-			
-			else {
-				$retval = true;
-				/*reporter::getReport('NLS Analisys')->addContents(0,
-				'current locale is: ' . settings::getConf('defaultLanguage') . '.' . settings::getCharset());*/
-			}
-		}
-		else {
-			$retval = true;
-		}
-		$results = putenv('LC_ALL=' . $language);
-		if (!$results) {
-			exit ('putenv failed');
-		}
-		return $retval;
-	}
-	
-	public static function addTranslation($domain, $directory = __EVA_HOME__ . '/locale') {
-		bindtextdomain($domain, $directory);
-		self::$domains[] = $domain;
-	}
-	
-	public static function getTranslation($domain) {
-		$result =false;
-		if(in_array($domain, self::$domains)) {
-			textdomain($domain);
-			$result =true;
-		}
-		return $result;
-	}
-	
-	public static function getLanguage() {
-		return self::$language;
-	}
-	
-	public static function detectLanguage() {
+	public function detectLanguage() {
 		if(isset($_GET['locale']) and locale::check($_GET['locale'])) { //detect from "?locale=" in URL
 			$language = $_GET['locale'];
 		}
@@ -82,10 +53,74 @@ class nativeLanguageSupport {
 			//reporter::getReport('NLS Analisys')->addContents(0, 'calculating locale with: ' . settings::getConf('preferredLanguage'));
 			$language = \conNeg::langBest(); //from db settings settings::getConf('preferredLanguage')
 		}
-		if(locale::check(self::$language) != false) {
+		if(locale::check($this->language) != false) {
 			//reporter::getReport('NLS Analisys')->addContents(0, 'locale from default settings...');
 		}
 		return $language;
+	}
+	
+	public function setLanguage($language) {
+		//improve this method
+		$retval = false;
+		
+		if(locale::check($language) != false) {
+			$this->language = $language;
+		}
+		else {
+			$this->language = $this->settings->getConf('defaultLanguage');
+		}
+		$this->language = 'it-IT';
+		$results = putenv('LC_ALL=' . $this->language);
+		if (!$results) {
+			exit ('putenv failed');
+		}
+		
+		$results = setlocale(LC_ALL, $this->language . '.' . $this->settings->getCharset(), locale::check($language));
+		if (!$results) {
+			/*reporter::getReport('NLS Analisys')->addContents(0,
+			'setlocale failed with ' . $results . ': locale function is not available on this platform,
+			or the given local does not exist in this environment: ' . $language . '.' . $this->settings->getCharset());*/
+			
+			$results = setlocale(LC_ALL,
+				$this->settings->getConf('defaultLanguage') . '.' . $this->settings->getCharset(), locale::check($language));
+				
+			if (!$results) {
+				/*reporter::getReport('NLS Analisys')->addContents(1,
+				'setlocale failed with ' . $results . ': locale function is not available on this platform,
+				or the given local does not exist in this environment: ' . 
+				$this->settings->getConf('defaultLanguage') . '.' . $this->settings->getCharset());*/
+			}
+			
+			else {
+				$retval = true;
+				/*reporter::getReport('NLS Analisys')->addContents(0,
+				'current locale is: ' . $this->settings->getConf('defaultLanguage') . '.' . $this->settings->getCharset());*/
+			}
+		}
+		else {
+			$retval = true;
+			/*reporter::getReport('NLS Analisys')->addContents(0,
+			'current locale is: ' . $this->language . '.' . $this->settings->getCharset());*/
+		}
+		return $retval;
+	}
+	
+	public function addTranslation($domain, $directory = __EVA_HOME__ . '/locale') {
+		bindtextdomain($domain, $directory);
+		$this->domains[] = $domain;
+	}
+	
+	public function getTranslation($domain) {
+		$result =false;
+		if(in_array($domain, $this->domains)) {
+			textdomain($domain);
+			$result =true;
+		}
+		return $result;
+	}
+	
+	public function getLanguage() {
+		return $this->language;
 	}
 
 }

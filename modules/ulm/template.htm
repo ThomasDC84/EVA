@@ -79,7 +79,7 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
 	<!--logInForm-->
   <div class="login">
 	<h1>%{LogIn}%</h1>
-    <form method="post" action="/ulm/index.php">
+    <form method="post" action="/ulm/index.php%{$referer}%">
     	<input type="text" id="userName" name="userName" placeholder="%{User Name:}%" required="required" />
         <input type="password" id="password" name="password" placeholder="%{Password:}%" required="required" />
         <button type="submit" class="btn btn-primary btn-block btn-large">%{LogIn}%</button>

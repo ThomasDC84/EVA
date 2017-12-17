@@ -1,41 +1,50 @@
 <?php
 
+/**
+
+    This file is part of EVA PHP Web Engine.
+
+    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    
+**/
+
 namespace EVA;
 
 include __EVA_HOME__ . '/modules/reportViewer/reportListWidget.php';
 
-class reportViewer implements iModules {
-	
+class reportViewer implements iModules,
+			      iSupportDataBase,
+			      iSupportUser,
+			      iSupportSettings,
+			      iSupportInternationalization,
+			      iSupportTemplate {
 	private $id;
 	private $title;
 	private $description;
 	private $contents;
 	private $output;
+	private $dataBase;
+	private $languageDomain;
+	private $txtDomain;
+	private $settings;
+	private $user;
+	private $template;
 	
 	public function __construct() {
-		
-		$user = logUser::login();
-		if(!$user) {
-			$this->title = gettext('System Report Viewer');
-			$this->description = gettext('System Report Viewer');
-			$this->contents = gettext('Access Denied') . '. ' . 
-				gettext('Please authenticate yourself in the') . ' <a href="/ulm/index.php?referer=/reportViewer/index.php">' .
-				gettext('authentication page') . '</a>.';
-		}
-		else {
-			$domain = 'reportViewer';
-
-			bindtextdomain($domain, __EVA_HOME__ . '/locale');
-
-			textdomain($domain);
-			
-			$db = dbFactory::buildDefaultDB();
-			$this->title = gettext('System Report Viewer');
-			$this->description = gettext('System Report Viewer');
-			$this->contents = '<p>' . gettext('No report selected to show') . '</p>';
-			$this->readLog();
-			$this->deleteLogs();
-		}
+		//load params here
+		$this->languageDomain = 'reportViewer';
+		$this->txtDomain = __EVA_HOME__ . '/locale';
 	}
 	
 	private function readLog() {
@@ -92,22 +101,27 @@ class reportViewer implements iModules {
 	}
 	
 	public function prepare() {
-		$template = templateFactory::buildTemplate('HTML');
 		
-		if(logUser::login() == false) {
-			$template->setTemplate(__EVA_HOME__ . '/modules/reportViewer/accessDenied.htm');
+		$title = gettext('System Report Viewer');
+			
+		$this->title = $title;
+		$this->description = $title;
+		
+		if(!$this->user) {
+			$this->template->setTemplate(__EVA_HOME__ . '/modules/reportViewer/accessDenied.htm');
+			$this->contents = gettext('Access Denied') . '. ' . 
+				gettext('Please authenticate yourself in the') . ' <a href="/ulm/index.php?referer=/reportViewer/index.php">' .
+				gettext('authentication page') . '</a>.';
 		}
 		else {
-			$template->setTemplate(__EVA_HOME__ . '/modules/reportViewer/template.htm');
-				
 			$reportListWidget = new reportListWidget();
 			
 			$rightSidebar = new sidebar('rightSideBar');
 			
 			$rightSidebar->addWidget($reportListWidget, 1);
-			$userWidget = new exampleWidget('user', gettext('Logged as: ') . logUser::login()->getUserName() . ' ');
-			$userWidget->setPutInTemplate(false);
 			
+			$userWidget = new exampleWidget('user', gettext('Logged as: ') . $this->user->getUserName() . ' ');
+			$userWidget->setPutInTemplate(false);
 			
 			$footerSidebar = new sidebar('footerSideBar');
 			
@@ -115,19 +129,68 @@ class reportViewer implements iModules {
 			
 			sidebarManager::addSidebar($rightSidebar);
 			sidebarManager::addSidebar($footerSidebar);
-		}
-		
-		$template->setTitle($this->title);
-		$template->setDescription($this->description);
-		$template->setContents($this->contents);
-		
-		$this->output = $template->getOutput();		
+			
+			$this->contents = '<p>' . gettext('No report selected to show') . '</p>';
+			$this->readLog();
+			$this->deleteLogs();
+		}	
 	}
 	
 	public function getOutput() {
 		return $this->output;
 	}
+	
+	public function getSettingsManager() {
+		return $this->settings;
+	}
+	
+	public function setSettingsManager($settings) {
+		$this->settings = $settings;
+	}
+	
+	public function getLanguageDomain() {
+		return $this->languageDomain;
+	}
+	
+	public function getTextDomain() {
+		return $this->txtDomain;
+	}
+	
+	public function getBaseURL() {
+		return '/eva/';
+	}
+	
+	public function getDataBaseFormat() {
+		return __EVA_DEFAULT_DATABASE_FORMAT__;
+	}
+	
+	public function getDataBase() {
+		return $this->dataBase;
+	}
 
+	public function setDataBase($dataBase) {
+		$this->dataBase = $dataBase;
+	}
+	
+	public function getUserDomain() {
+		return 'EVA';
+	}
+	
+	public function setUser($user) {
+		$this->user = $user;
+	}
+	
+	public function getTemplateFormat() { //html, php, tpl...
+		return 'HTML';
+	}
+	
+	public function getTemplateParameter() { //template.html
+		return __EVA_HOME__ . '/modules/reportViewer/template.htm';
+	}
+	
+	public function setTemplate($template) {
+		$this->template = $template;
+	}
 }
 
 ?>

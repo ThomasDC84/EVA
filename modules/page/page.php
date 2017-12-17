@@ -1,30 +1,49 @@
 <?php
 
+/**
+
+    This file is part of EVA PHP Web Engine.
+
+    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    
+**/
+
 namespace EVA;
 
-class page implements iModules {
+class page implements iModules,
+		      iSupportDataBase,
+		      iSupportSettings,
+		      iSupportInternationalization,
+		      iSupportTemplate {
 	
 	private $id;
 	private $title;
 	private $description;
 	private $contents;
 	private $output;
+	private $dataBase;
+	private $languageDomain;
+	private $txtDomain;
+	private $settings;
+	private $user;
+	private $template;
 	
 	public function __construct() {
-		$db = dbFactory::buildDefaultDB();
-		$this->detectID();
-		if($db->query('SELECT * FROM `pages` WHERE `id` = ' . $this->id) and
-			$db->getNumberOfRows() != 0) {
-			$r = $db->fetchResults();
-			$this->title = $r['title'];
-			$this->description = $r['description'];
-			$this->contents = $r['contents'];
-		}
-		else {
-			$this->title = 'Page 404';
-			$this->description = 'Page not Found';
-			$this->contents = 'The page you were looking for was not found';
-		}
+		//load params here
+		$this->languageDomain = 'page';
+		$this->txtDomain = __EVA_HOME__ . '/locale';
+		$this->output = '\'@\'';
 	}
 	
 	private function detectID() {
@@ -66,12 +85,20 @@ class page implements iModules {
 	}
 	
 	public function prepare() {
-		$template = templateFactory::buildTemplate('HTML');		
-		$template->setTemplate(__EVA_HOME__ . '/modules/page/template.htm');
-		$template->setTitle($this->title);
-		$template->setDescription($this->description);
-		$template->setContents($this->contents);
-				
+		$this->detectID();
+		if($this->dataBase->query('SELECT * FROM `pages` WHERE `id` = ' . $this->id) and
+			$this->dataBase->getNumberOfRows() != 0) {
+			$r = $this->dataBase->fetchResults();
+			$this->title = $r['title'];
+			$this->description = $r['description'];
+			$this->contents = $r['contents'];
+		}
+		else {
+			$this->title = 'Page 404';
+			$this->description = 'Page not Found';
+			$this->contents = 'The page you were looking for was not found';
+		}
+		
 		$testWidget = new exampleWidget('Test', 'Hello World!');
 		
 		$sidebar = new sidebar('leftSidebar');
@@ -79,14 +106,59 @@ class page implements iModules {
 		$sidebar->addWidget($testWidget, 1);
 		
 		sidebarManager::addSidebar($sidebar);
-		
-		$this->output = $template->getOutput();		
 	}
 	
 	public function getOutput() {
 		return $this->output;
 	}
+	
+	public function getRequireSettingsManager() {
+		return true;
+	}
+	
+	public function getSettingsManager() {
+		return $this->settings;
+	}
+	
+	public function setSettingsManager($settings) {
+		$this->settings = $settings;
+	}
+	
+	public function getLanguageDomain() {
+		return $this->languageDomain;
+	}
+	
+	public function getTextDomain() {
+		return $this->txtDomain;
+	}
+	
+	public function getBaseURL() {
+		return '/eva/';
+	}
+	
+	public function getDataBaseFormat() {
+		return __EVA_DEFAULT_DATABASE_FORMAT__;
+	}
+	
+	public function getDataBase() {
+		return $this->dataBase;
+	}
 
+	public function setDataBase($dataBase) {
+		$this->dataBase = $dataBase;
+	}
+	
+	public function getTemplateFormat() { //html, php, tpl...
+		return 'HTML';
+	}
+	
+	public function getTemplateParameter() { //template.html
+		return __EVA_HOME__ . '/modules/page/template.htm';
+	}
+	
+	public function setTemplate($template) {
+		$this->template = $template;
+	}
 }
 
 ?>

@@ -1,70 +1,84 @@
 <?php
 
+/**
+
+    This file is part of EVA PHP Web Engine.
+
+    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    
+**/
+
 namespace EVA;
 
 final class settings {
 	
-	protected static $charset;
-	protected static $encoding;
-	protected static $config;
-	protected static $db;
+	private $charset;
+	private $encoding;
+	private $config;
+	private $db;
 	
-	public static function boot() {
-		self::$db = dbFactory::buildDefaultDB();
-		self::$config = array();
-		if(false !== self::$db->query('SELECT * FROM `settings`') and
-			self::$db->getNumberOfRows() != 0) {
-			while($r = self::$db->fetchResults()) {
-				self::$config[$r['name']] = $r['value'];
+	public function __construct($db) {
+		$this->db = $db;
+		$this->config = array();
+		if(false !== $db->query('SELECT * FROM `settings`') and
+			$db->getNumberOfRows() != 0) {
+			while($r = $db->fetchResults()) {
+				$this->config[$r['name']] = $r['value'];
 			}
 		}
-		self::$charset = \conNeg::charBest(self::$config['preferredCharset']);
-		if(self::$charset == NULL) {
-			self::$charset = 'utf8';
+		$this->charset = \conNeg::charBest($this->config['preferredCharset']);
+		if($this->charset == NULL) {
+			$this->charset = 'utf8';
 		}
-		self::$encoding = \conNeg::encBest(self::$config['preferredEncoding']);
+		$this->encoding = \conNeg::encBest($this->config['preferredEncoding']);
 	}
 	
-	public static function getConf($parameter) {
+	public function getConf($parameter) { //dynamic? depends it from the db?
 		$cfg = false;
-		if(isset(self::$config[$parameter])) {
-			$cfg = self::$config[$parameter];
+		if(isset($this->config[$parameter])) {
+			$cfg = $this->config[$parameter];
 		}
 		return $cfg;
 	}
 	
-	public static function setConf($value, $parameter, $subparam = null) {
+	public function setConf($value, $parameter, $subparam = null) { //dynamic? depends it from the db?
 		if($subparam == null) {
-			self::$config[$parameter] = $value;
+			$this->config[$parameter] = $value;
 		}
 		else {
-			self::$config[$parameter][$subparam] = $value;
+			$this->config[$parameter][$subparam] = $value;
 		}
 	}
-		
-	public static function getLanguage() {
-		return self::$language;
+	
+	public function getCharset() { //static, user is only one...
+		return $this->charset;		
 	}
 	
-	public static function getCharset() {
-		return self::$charset;		
+	public function getEncoding() { //static, user is only one...
+		return $this->encoding;
 	}
 	
-	public static function getEncoding() {
-		return self::$encoding;
-	}
-	
-	public static function getCookie($cookieName) {
+	public function getCookie($cookieName) { //static, user is only one...
 		$cookieVal = false;
 		if(isset($_COOKIE[$cookieName])) {
 			$cookieVal = $_COOKIE[$cookieName];
 		}
 		return $cookieVal;
-			
 	}
 	
-	public static function setCookie($cookieName, $value = "", $expire = 0,
-		$path = "", $domain = "", $secure = false, $httponly = false) {
+	public function setCookie($cookieName, $value = "", $expire = 0,
+		$path = "", $domain = "", $secure = false, $httponly = false) { //static, user is only one...
 		return setCookie($cookieName, $value, $expire, $path, $domain, $secure,
 		$httponly);
 	}
