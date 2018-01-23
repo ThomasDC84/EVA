@@ -21,12 +21,20 @@
 
 namespace PROTEUS;
 
-interface iSupportTemplate {
+class pageAdmin implements iAdministration {
 	
-	public function getTemplateFormat(); //html, php, tpl...
+	public function getTitle() {
+		return 'Page Module Administration';
+	}
 	
-	public function getTemplateParameter(); //template.html
+	public function getDescription() {
+		return 'Page Module Administration Settings';
+	}
 	
-	public function setTemplate($template);
-		
-} 
+	public function getContents() {
+		return 'Page Module Administration Settings';
+	}
+	
+}
+
+?>

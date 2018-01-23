@@ -1,2 +1,2 @@
-# EVA
+# PROTEUS
 plugins folder

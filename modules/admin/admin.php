@@ -2,106 +2,194 @@
 
 /**
 
-    This file is part of EVA PHP Web Engine.
+    This file is part of PROTEUS PHP Web Engine.
 
-    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    PROTEUS PHP Web Engine is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    PROTEUS PHP Web Engine is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    along with PROTEUS PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
     
 **/
 
-namespace EVA;
+namespace PROTEUS;
 
-class admin implements iModules {
+include_once __PROTEUS_HOME__ . '/modules/admin/adminWidget.php';
 
+class admin implements  iModules,
+			iSupportDataBase,
+			iSupportUser,
+			iSupportSettings,
+			iSupportInternationalization,
+			iSupportTemplate {
+	
 	private $title;
 	private $description;
 	private $contents;
 	private $output;
-	
+	private $dataBase;
+	private $languageDomain;
+	private $txtDomain;
 	private $settings;
-	private $nls;
-	private $db;
+	private $user;
+	private $template;
 	
 	public function __construct() {
-		$this->title = gettext('Admin Area');
-		$this->description = gettext('Default administration area of EVA Engine');
-		$this->contents = 'TEST';
-		$this->output = '';
-		$this->db = dbFactory::buildDefaultDB();
-		$userLog = new userLog($this->db, 'EVA');
-		$this->user = $userLog->in();
-		if(!$this->user) {
-			$this->contents .= ' OK';
-		}
-		else {
-			$this->contents .= ' KO';
-		}
+		//load params here
+		$this->languageDomain = 'admin';
+		$this->txtDomain = __PROTEUS_HOME__ . '/locale';
 	}
-	
+
 	public function getTitle() {
 		return $this->title;
 	}
-	
-	public function setTitle($title) { }
-	
+
+	public function setTitle($title) {
+		$this->title = $title;
+	}
+
 	public function getDescription() {
 		return $this->description;
 	}
-	
-	public function setDescription($description) { }
-	
+
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+
 	public function getContents() {
 		return $this->contents;
 	}
-	
-	public function setContents($contents) { }
-	
-	public function prepare() {
-		$this->output = $this->contents;
+
+	public function setContents($contents) {
+		$this->contents = $contents;
 	}
-	
+
+	public function prepare() {
+		$this->title = gettext('Administration Area');
+		$this->description = gettext('PROTEUS Administration Module');
+		$this->contents = gettext('Administration settings.');
+		
+		if(!$this->user) {
+			$this->template->setTemplate(__PROTEUS_HOME__ . '/modules/admin/accessDenied.htm');
+			$this->contents = gettext('Access Denied') . '. ' . 
+				gettext('Please authenticate yourself in the') . ' <a href="/ulm/index.php?referer=/admin/index.php">' .
+				gettext('authentication page') . '</a>.';
+		}
+		else {
+			$leftSidebar = new sidebar('leftSideBar');
+			
+			$adminWidget = new adminWidget($this->dataBase);
+			
+			$leftSidebar->addWidget($adminWidget, 1);
+			
+			$footerSidebar = new sidebar('footerSideBar');
+			
+			$footerWidget = new dummyWidget('footer', 'PROTEUS Admin Area');
+			
+			$footerSidebar->addWidget($footerWidget, 1);
+			
+			sidebarManager::addSidebar($leftSidebar);
+			sidebarManager::addSidebar($footerSidebar);
+			
+			/** Load Specific Settings **/
+			switch(urlParser::getUrlParameter('options')) {
+				case 'module': {
+					$moduleOption = urlParser::getUrlParameter('module') . 'Admin';
+					if(class_exists($moduleOption, true)) {
+						$moduleSettings = new $moduleOption();
+					}
+					elseif(class_exists('PROTEUS\\'.$moduleOption, true)) {
+						$moduleOption = 'PROTEUS\\'.$moduleOption;
+						$moduleSettings = new $moduleOption();
+					}
+					$this->title .= ' | ' . $moduleSettings->getTitle();
+					$this->description .= ' | ' . $moduleSettings->getDescription();
+					$this->contents .= $moduleSettings->getContents();
+				}; break;
+				case 'plugin': {
+					$pluginOption = urlParser::getUrlParameter('plugin') . 'Admin';
+					if(class_exists($pluginOption, true)) {
+						$pluginSettings = new $pluginOption();
+					}
+					elseif(class_exists('PROTEUS\\'.$pluginOption, true)) {
+						$pluginOption = 'PROTEUS\\'.$pluginOption;
+						$pluginSettings = new $pluginOption();
+					}
+					$this->title .= ' | ' . $pluginSettings->getTitle();
+					$this->description .= ' | ' . $pluginSettings->getDescription();
+					$this->contents .= $pluginSettings->getContents();
+				}; break;
+				default: ;
+			}
+		}
+	}
+
 	public function getOutput() {
 		return $this->output;
 	}
 	
-	public function enableSM() {
-		return true;
-	}
-	
-	public function getSM() {
+	public function getSettingsManager() {
 		return $this->settings;
 	}
 	
-	public function setSM($settings) {
+	public function setSettingsManager($settings) {
 		$this->settings = $settings;
 	}
 	
-	public function enableNLS() {
-		return true;
+	public function getLanguageDomain() {
+		return $this->languageDomain;
 	}
 	
-	public function setNLS($nls) {
-		$this->nls = $nls;
+	public function getTextDomain() {
+		return $this->txtDomain;
 	}
 	
 	public function getBaseURL() {
-		return '/admin';
+		return '/proteus/';
 	}
 	
-	public function getDB() {
-		return $this->db;
+	public function getDataBaseFormat() {
+		return __PROTEUS_DEFAULT_DATABASE_FORMAT__;
 	}
 	
+	public function getDataBase() {
+		return $this->dataBase;
+	}
+
+	public function setDataBase($dataBase) {
+		$this->dataBase = $dataBase;
+	}
+
+	public function getRequireUserSupport() {
+		return true;
+	}
+	
+	public function getUserDomain() {
+		return 'PROTEUS';
+	}
+	
+	public function setUser($user) {
+		$this->user = $user;
+	}
+	
+	public function getTemplateFormat() { //html, php, tpl...
+		return 'HTML';
+	}
+	
+	public function getTemplateParameter() { //template.html
+		return __PROTEUS_HOME__ . '/modules/admin/template.htm';
+	}
+	
+	public function setTemplate($template) {
+		$this->template = $template;
+	}
 }
 
 ?>

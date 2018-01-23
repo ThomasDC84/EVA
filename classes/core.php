@@ -2,24 +2,24 @@
 
 /**
 
-    This file is part of EVA PHP Web Engine.
+    This file is part of PROTEUS PHP Web Engine.
 
-    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    PROTEUS PHP Web Engine is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    PROTEUS PHP Web Engine is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    along with PROTEUS PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
     
 **/
 
-namespace EVA;
+namespace PROTEUS;
 
 final class core {
 
@@ -40,11 +40,13 @@ final class core {
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 		
+		urlParser::__Init();
+		
 		$dbFactory = new dbFactory();
 		
 		//Plugin Manager will use default DB here
 		self::$pmToken = rand();
-		self::$pluginManager = new pluginManager(self::$pmToken, $dbFactory->buildDataBase(__EVA_DEFAULT_DATABASE_FORMAT__));
+		self::$pluginManager = new pluginManager(self::$pmToken, $dbFactory->buildDataBase(__PROTEUS_DEFAULT_DATABASE_FORMAT__));
 		
 		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_FIRST
 		
@@ -100,14 +102,12 @@ final class core {
 	}
 	
 	private static function loadModule() {
-		$m = explode('/', $_SERVER['REQUEST_URI']);
-		self::$moduleName = $m[1];
-		
+		self::$moduleName = urlParser::getPath(0);
 		if(class_exists(self::$moduleName)) {
 			self::$module = new self::$moduleName();
 		}
-		elseif(class_exists('EVA\\'.self::$moduleName)) { //this is crucial for namespace compatiblity
-			self::$moduleName = 'EVA\\'.self::$moduleName;
+		elseif(class_exists('PROTEUS\\'.self::$moduleName)) { //this is crucial for namespace compatiblity
+			self::$moduleName = 'PROTEUS\\'.self::$moduleName;
 			self::$module = new self::$moduleName();
 		}
 		else {

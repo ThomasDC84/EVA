@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: User Log Manager\n"
 "POT-Creation-Date: 2017-12-11 18:58+0100\n"
-"PO-Revision-Date: 2017-12-11 18:58+0100\n"
+"PO-Revision-Date: 2018-01-23 10:33+0100\n"
 "Last-Translator: Thomas Di Cristofaro <thomas.dc84@gmail.com>\n"
 "Language-Team: the-dc84 <thomas.dc84@gmail.com>\n"
 "Language: it_IT\n"
@@ -12,40 +12,40 @@ msgstr ""
 "X-Generator: Poedit 1.6.10\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-SearchPath-0: /var/www/html/eva/modules/ulm\n"
+"X-Poedit-SearchPath-0: /var/www/html/proteus/modules/ulm\n"
 
-#: /var/www/html/eva/modules/ulm/ulm.php:54
+#: /var/www/html/proteus/modules/ulm/ulm.php:54
 msgid "User Log Manager"
 msgstr "Gestore Accesso Utenti"
 
-#: /var/www/html/eva/modules/ulm/ulm.php:55
-msgid "EVA ULM Module for general user login/logout"
-msgstr "Modulo EVA ULM per gestione generale utenti"
+#: /var/www/html/proteus/modules/ulm/ulm.php:55
+msgid "PROTEUS ULM Module for general user login/logout"
+msgstr "Modulo PROTEUS ULM per gestione generale utenti"
 
-#: /var/www/html/eva/modules/ulm/ulm.php:77
+#: /var/www/html/proteus/modules/ulm/ulm.php:77
 msgid "Login"
 msgstr "Accesso"
 
-#: /var/www/html/eva/modules/ulm/ulm.php:77
+#: /var/www/html/proteus/modules/ulm/ulm.php:77
 msgid "User Name:"
 msgstr "Nome Utente:"
 
-#: /var/www/html/eva/modules/ulm/ulm.php:77
+#: /var/www/html/proteus/modules/ulm/ulm.php:77
 msgid "Password:"
 msgstr "Parola Chiave:"
 
-#: /var/www/html/eva/modules/ulm/ulm.php:77
+#: /var/www/html/proteus/modules/ulm/ulm.php:77
 msgid "Log In"
 msgstr "Accedi"
 
-#: /var/www/html/eva/modules/ulm/ulm.php:77
+#: /var/www/html/proteus/modules/ulm/ulm.php:77
 msgid "Reset"
 msgstr "Reimposta"
 
-#: /var/www/html/eva/modules/ulm/ulm.php:81
+#: /var/www/html/proteus/modules/ulm/ulm.php:81
 msgid "Logged as"
 msgstr "Registrato come"
 
-#: /var/www/html/eva/modules/ulm/ulm.php:81
+#: /var/www/html/proteus/modules/ulm/ulm.php:81
 msgid "Log Out"
 msgstr "Esci"

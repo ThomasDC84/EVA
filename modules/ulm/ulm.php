@@ -2,31 +2,31 @@
 
 /**
 
-    This file is part of EVA PHP Web Engine.
+    This file is part of PROTEUS PHP Web Engine.
 
-    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    PROTEUS PHP Web Engine is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    PROTEUS PHP Web Engine is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    along with PROTEUS PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
     
 **/
 
-namespace EVA;
+namespace PROTEUS;
 
 class ulm implements  iModules,
-		      iDataBaseSupport,
-		      iUserSupport,
-		      iSettingsSupport,
-		      iInternationalizationSupport,
-		      iTemplateSupport {
+		      iSupportDataBase,
+		      iSupportUser,
+		      iSupportSettings,
+		      iSupportInternationalization,
+		      iSupportTemplate {
 	
 	private $title;
 	private $description;
@@ -42,7 +42,7 @@ class ulm implements  iModules,
 	public function __construct() {
 		//load params here
 		$this->languageDomain = 'ulm';
-		$this->txtDomain = __EVA_HOME__ . '/locale';
+		$this->txtDomain = __PROTEUS_HOME__ . '/locale';
 	}
 
 	public function getTitle() {
@@ -71,7 +71,7 @@ class ulm implements  iModules,
 
 	public function prepare() {
 		$this->title = gettext('User Log Manager');
-		$this->description = gettext('EVA ULM Module for general user login/logout');
+		$this->description = gettext('PROTEUS ULM Module for general user login/logout');
 		
 		if(isset($_GET['action']) and $_GET['action'] == 'logout') {
 			//save username here to say goodbye later...
@@ -79,7 +79,7 @@ class ulm implements  iModules,
 			$this->user = false;
 		}
 
-		$this->contents = $this->template->getSection('logInForm');
+		$this->contents = get_template('logInForm', file_get_contents(__PROTEUS_HOME__ . '/modules/ulm/loginForm.htm'));
 
 		$referer = '';
 		$refererPrefix= '&referer=';
@@ -126,7 +126,11 @@ class ulm implements  iModules,
 	}
 	
 	public function getBaseURL() {
-		return '/eva/';
+		return '/proteus/';
+	}
+	
+	public function getDataBaseFormat() {
+		return __PROTEUS_DEFAULT_DATABASE_FORMAT__;
 	}
 	
 	public function getDataBase() {
@@ -142,19 +146,19 @@ class ulm implements  iModules,
 	}
 	
 	public function getUserDomain() {
-		return 'EVA';
+		return 'PROTEUS';
 	}
 	
 	public function setUser($user) {
 		$this->user = $user;
 	}
 	
-	public function getTemplateNeededType() { //html, php, tpl...
+	public function getTemplateFormat() { //html, php, tpl...
 		return 'HTML';
 	}
 	
 	public function getTemplateParameter() { //template.html
-		return __EVA_HOME__ . '/modules/ulm/template.htm';
+		return __PROTEUS_HOME__ . '/modules/ulm/template.htm';
 	}
 	
 	public function setTemplate($template) {

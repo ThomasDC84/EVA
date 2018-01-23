@@ -2,26 +2,26 @@
 
 /**
 
-    This file is part of EVA PHP Web Engine.
+    This file is part of PROTEUS PHP Web Engine.
 
-    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    PROTEUS PHP Web Engine is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    PROTEUS PHP Web Engine is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    along with PROTEUS PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
     
 **/
 
-namespace EVA;
+namespace PROTEUS;
 
-include __EVA_HOME__ . '/modules/reportViewer/reportListWidget.php';
+include __PROTEUS_HOME__ . '/modules/reportViewer/reportListWidget.php';
 
 class reportViewer implements iModules,
 			      iSupportDataBase,
@@ -44,15 +44,15 @@ class reportViewer implements iModules,
 	public function __construct() {
 		//load params here
 		$this->languageDomain = 'reportViewer';
-		$this->txtDomain = __EVA_HOME__ . '/locale';
+		$this->txtDomain = __PROTEUS_HOME__ . '/locale';
 	}
 	
 	private function readLog() {
 		//read Log if any
 		if(isset($_GET['readLog'])) {
-			if(file_exists(__EVA_HOME__ . '/reports/' . $_GET['readLog'])) {
+			if(file_exists(__PROTEUS_HOME__ . '/reports/' . $_GET['readLog'])) {
 				$reportFileName = $_GET['readLog'];
-				$report = file_get_contents(__EVA_HOME__ . '/reports/' . $_GET['readLog']);
+				$report = file_get_contents(__PROTEUS_HOME__ . '/reports/' . $_GET['readLog']);
 				$this->contents = '<div style="padding: 10px;"><h1>' . $reportFileName . '</h1><hr/><br/><pre>' . $report . '</pre></div>';
 			}
 		}
@@ -62,14 +62,14 @@ class reportViewer implements iModules,
 		//delete logs if any
 		if(isset($_POST['report'])) {
 			if(!is_array($_POST['report'])) {
-				if(file_exists(__EVA_HOME__ . '/reports/' . $_POST['report'])) {
+				if(file_exists(__PROTEUS_HOME__ . '/reports/' . $_POST['report'])) {
 					unlink($_POST['report']);
 				}
 			}
 			else {
 				foreach($_POST['report'] as $report) {
-					if(file_exists(__EVA_HOME__ . '/reports/' . $report)) {
-						unlink(__EVA_HOME__ . '/reports/' . $report);
+					if(file_exists(__PROTEUS_HOME__ . '/reports/' . $report)) {
+						unlink(__PROTEUS_HOME__ . '/reports/' . $report);
 					}
 				}
 			}
@@ -108,7 +108,7 @@ class reportViewer implements iModules,
 		$this->description = $title;
 		
 		if(!$this->user) {
-			$this->template->setTemplate(__EVA_HOME__ . '/modules/reportViewer/accessDenied.htm');
+			$this->template->setTemplate(__PROTEUS_HOME__ . '/modules/reportViewer/accessDenied.htm');
 			$this->contents = gettext('Access Denied') . '. ' . 
 				gettext('Please authenticate yourself in the') . ' <a href="/ulm/index.php?referer=/reportViewer/index.php">' .
 				gettext('authentication page') . '</a>.';
@@ -120,8 +120,8 @@ class reportViewer implements iModules,
 			
 			$rightSidebar->addWidget($reportListWidget, 1);
 			
-			$userWidget = new exampleWidget('user', gettext('Logged as: ') . $this->user->getUserName() . ' ');
-			$userWidget->setPutInTemplate(false);
+			$userWidget = new dummyWidget('user', gettext('Logged as: ') . $this->user->getUserName() . ' ');
+			$userWidget->setUseTemplate(true);
 			
 			$footerSidebar = new sidebar('footerSideBar');
 			
@@ -157,11 +157,11 @@ class reportViewer implements iModules,
 	}
 	
 	public function getBaseURL() {
-		return '/eva/';
+		return '/proteus/';
 	}
 	
 	public function getDataBaseFormat() {
-		return __EVA_DEFAULT_DATABASE_FORMAT__;
+		return __PROTEUS_DEFAULT_DATABASE_FORMAT__;
 	}
 	
 	public function getDataBase() {
@@ -173,7 +173,7 @@ class reportViewer implements iModules,
 	}
 	
 	public function getUserDomain() {
-		return 'EVA';
+		return 'PROTEUS';
 	}
 	
 	public function setUser($user) {
@@ -185,7 +185,7 @@ class reportViewer implements iModules,
 	}
 	
 	public function getTemplateParameter() { //template.html
-		return __EVA_HOME__ . '/modules/reportViewer/template.htm';
+		return __PROTEUS_HOME__ . '/modules/reportViewer/template.htm';
 	}
 	
 	public function setTemplate($template) {

@@ -1,7 +1,8 @@
 html,body {
   margin:0;
   padding:0;
-  
+  background-color:#EFEFEF;
+  color: black;
 }
 
 #pagewidth {}
@@ -26,7 +27,6 @@ html,body {
 }
 
 #maincol {
-  background-color:#EFEFEF;
   position:relative;
   width:74%;
   float:right;
@@ -35,7 +35,6 @@ html,body {
 }
 
 #footer {
-  height:75px;
   background-color:#3366FF;
   clear:both;
   display:block;

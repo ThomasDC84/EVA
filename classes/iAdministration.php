@@ -21,12 +21,14 @@
 
 namespace PROTEUS;
 
-interface iSupportTemplate {
+interface iAdministration {
 	
-	public function getTemplateFormat(); //html, php, tpl...
+	public function getTitle();
 	
-	public function getTemplateParameter(); //template.html
+	public function getDescription();
 	
-	public function setTemplate($template);
-		
-} 
+	public function getContents();
+	
+}
+
+?>

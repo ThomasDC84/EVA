@@ -212,7 +212,7 @@ produce it from the Program, in the form of source code under the
 terms of section 4, provided that you also meet all of these conditions:
 
     a) The work must carry prominent notices stating that you modified
-    it, and giving a relevant date.
+    it, and giving a relproteusnt date.
 
     b) The work must carry prominent notices stating that it is
     released under this License and any conditions added under section
@@ -396,7 +396,7 @@ of that license document, provided that the further restriction does
 not survive such relicensing or conveying.
 
   If you add terms to a covered work in accord with this section, you
-must place, in the relevant source files, a statement of the
+must place, in the relproteusnt source files, a statement of the
 additional terms that apply to those files, or a notice indicating
 where to find the applicable terms.
 

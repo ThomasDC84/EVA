@@ -2,30 +2,30 @@
 
 /**
 
-    This file is part of EVA PHP Web Engine.
+    This file is part of PROTEUS PHP Web Engine.
 
-    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    PROTEUS PHP Web Engine is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    PROTEUS PHP Web Engine is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    along with PROTEUS PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
     
 **/
 
-namespace EVA;
+namespace PROTEUS;
 
 class templateFactory {
 	public static function buildTemplate($templateType, $module) {
 		$template = false;
-		if(class_exists('EVA\template'.$templateType, true)) {
-			$templateClass = 'EVA\template' . $templateType;
+		if(class_exists('PROTEUS\template'.$templateType, true)) {
+			$templateClass = 'PROTEUS\template' . $templateType;
 			$template = new $templateClass($module);
 		}
 		return $template;

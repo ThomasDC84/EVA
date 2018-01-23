@@ -2,53 +2,56 @@
 
 /**
 
-    This file is part of EVA PHP Web Engine.
+    This file is part of PROTEUS PHP Web Engine.
 
-    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    PROTEUS PHP Web Engine is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    PROTEUS PHP Web Engine is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    along with PROTEUS PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
     
 **/
 
-define('__EVA_DEFAULT_DATABASE_FORMAT__', true);
+define('__PROTEUS_DEFAULT_DATABASE_FORMAT__', true);
 define('HOOK_FIRST', 1);
 define('HOOK_CONTENTS', 2);
 define('HOOK_OUTPUT', 3);
 define('HOOK_LAST', 4);
 
-function evaAutoCall($className) {
-	$className = str_ireplace('EVA\\', '', $className);
-	if(file_exists(__EVA_HOME__ . '/classes/' . $className . '.php')) {
-		require_once __EVA_HOME__ . '/classes/' . $className . '.php';
+function proteusAutoCall($className) {
+	$className = str_ireplace('PROTEUS\\', '', $className);
+	if(file_exists(__PROTEUS_HOME__ . '/classes/' . $className . '.php')) {
+		require_once __PROTEUS_HOME__ . '/classes/' . $className . '.php';
 	}
-	elseif(file_exists(__EVA_HOME__ . '/modules/' . $className . '/' . $className . '.php')) {
-		require_once __EVA_HOME__ . '/modules/' . $className . '/' . $className . '.php';
+	elseif(file_exists(__PROTEUS_HOME__ . '/modules/' . $className . '/' . $className . '.php')) {
+		require_once __PROTEUS_HOME__ . '/modules/' . $className . '/' . $className . '.php';
 	}
-	elseif(file_exists(__EVA_HOME__ . '/plugins/' . $className . '/' . $className . '.php')) {
-		require_once __EVA_HOME__ . '/plugins/' . $className . '/' . $className . '.php';
+	elseif(file_exists(__PROTEUS_HOME__ . '/modules/' . str_ireplace('Admin', '', $className) . '/' . $className . '.php')) {
+		require_once __PROTEUS_HOME__ . '/modules/' . str_ireplace('Admin', '', $className) . '/' . $className . '.php';
+	}
+	elseif(file_exists(__PROTEUS_HOME__ . '/plugins/' . $className . '/' . $className . '.php')) {
+		require_once __PROTEUS_HOME__ . '/plugins/' . $className . '/' . $className . '.php';
 	}
 }
 
-spl_autoload_register('evaAutoCall');
+spl_autoload_register('proteusAutoCall');
 
 function callSubModule($subModuleName) {
 	$result = false;
-	if(file_exists(__EVA_HOME__ . '/modules/' . EVA\core::getModuleName() . '/subModules/' . $subModuleName . '.php')) {
-		require_once __EVA_HOME__ . '/modules/' . EVA\core::getModuleName() . '/subModules/' . $subModuleName . '.php';
+	if(file_exists(__PROTEUS_HOME__ . '/modules/' . PROTEUS\core::getModuleName() . '/subModules/' . $subModuleName . '.php')) {
+		require_once __PROTEUS_HOME__ . '/modules/' . PROTEUS\core::getModuleName() . '/subModules/' . $subModuleName . '.php';
 		if(class_exists($subModuleName)) {
 			$result = new $subModuleName();
 		}
-		elseif(class_exists('EVA\\' . $subModuleName)) {
-			$subModuleName = 'EVA\\' . $subModuleName;
+		elseif(class_exists('PROTEUS\\' . $subModuleName)) {
+			$subModuleName = 'PROTEUS\\' . $subModuleName;
 			$result = new $subModuleName();
 		}
 	}
@@ -73,6 +76,9 @@ function full_url( $s, $use_forwarded_host = false )
 }
 
 function get_template($tag, $html) {
+	if(is_file($html)) {
+		$html = file_get_contents($html);
+	}
 	$startsAt = strpos($html, '<!--'.$tag.'-->') + strlen('<!--'.$tag.'-->');
 	$endsAt = strpos($html, '<!--/'.$tag.'-->', $startsAt);
 	$result = substr($html, $startsAt, $endsAt - $startsAt);
@@ -93,13 +99,13 @@ function parse_template($tags, $replacements, $template = '', $tagType = 1)
 }
 
 function escapeString($string) {
-    $search = array("\\"      ,  "\_",   "\%", "\x00",   "\b",  "\n",  "\t",   "\r",  "'",  '"', "\x1a");
-    $replace = array("\\\\", "\\_", "\\%",    "\\0", "\\b","\\n", "\\t", "\\r", "\'", '\"', "\\Z");
+	$search = array("\\"      ,  "\_",   "\%", "\x00",   "\b",  "\n",  "\t",   "\r",  "'",  '"', "\x1a");
+	$replace = array("\\\\", "\\_", "\\%",    "\\0", "\\b","\\n", "\\t", "\\r", "\'", '\"', "\\Z");
 
-    $string = str_replace($search, $replace, $string);
-	
+	$string = str_replace($search, $replace, $string);
+
 	$string = htmlentities($string);
-	
+
 	return $string;
 }
 

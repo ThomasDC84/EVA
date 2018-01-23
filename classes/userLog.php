@@ -2,31 +2,30 @@
 
 /**
 
-    This file is part of EVA PHP Web Engine.
+    This file is part of PROTEUS PHP Web Engine.
 
-    EVA PHP Web Engine is free software: you can redistribute it and/or modify
+    PROTEUS PHP Web Engine is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    EVA PHP Web Engine is distributed in the hope that it will be useful,
+    PROTEUS PHP Web Engine is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with EVA PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
+    along with PROTEUS PHP Web Engine.  If not, see <http://www.gnu.org/licenses/>.
     
 **/
 
-namespace EVA;
+namespace PROTEUS;
 
 class userLog {
 
 	private $currentUser = false;
 	private $cet; //cookie expiration time
 	private $db;
-	private $userDomain;
 	
 	public function __construct($db, $userDomain = null, $cet = 604800) {
 		$this->db = $db;
@@ -62,7 +61,7 @@ class userLog {
 		if(!$cookieAccess) {
 			$password = md5($password);
 		}
-		$query = "SELECT * FROM users WHERE userDomain = '$this->userDomain' AND userName = '$userName' AND password = '$password'";
+		$query = "SELECT * FROM users WHERE userName = '$userName' AND password = '$password'";
 		if($this->db->query($query) and
 			$this->db->getNumberOfRows() != 0) {
 			$r = $this->db->fetchResults();
@@ -70,7 +69,6 @@ class userLog {
 			
 			//load user data here
 			
-			setcookie('userDomain', $this->userDomain, time()+86400, '/');
 			setcookie('userName', $userName, time()+86400, '/');
 			setcookie('password', $password, time()+86400, '/');
 		}

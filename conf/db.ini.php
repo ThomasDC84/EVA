@@ -1,4 +1,4 @@
-;) Default Configuration File for EVA - <?php die("Access Denied"); ?>
+;) Default Configuration File for PROTEUS - <?php die("Access Denied"); ?>
 
 [General]
 defaultDB = MySQL
@@ -8,9 +8,9 @@ defaultDB = MySQL
 host = "localhost"
 username = "root"
 password = "thomas"
-dbname = "eva"
+dbname = "proteus"
 port = ""
 socket = ""
 
 [SQLite3]
-dbname = eva
+dbname = proteus
