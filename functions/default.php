@@ -109,4 +109,8 @@ function escapeString($string) {
 	return $string;
 }
 
+function report ($id, $contents, $errorLevel = 0) {
+	PROTEUS\reporter::getReport($id)->addContents($contents, $errorLevel);
+}
+
 ?>

@@ -42,7 +42,7 @@ class ulm implements  iModules,
 	public function __construct() {
 		//load params here
 		$this->languageDomain = 'ulm';
-		$this->txtDomain = __PROTEUS_HOME__ . '/locale';
+		$this->txtDomain = __PROTEUS_HOME__ . '/modules/ulm/locale';
 	}
 
 	public function getTitle() {

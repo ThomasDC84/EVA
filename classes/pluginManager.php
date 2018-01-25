@@ -34,8 +34,13 @@ class pluginManager implements \SplSubject {
 		if($db->query('SELECT * FROM `plugins`') and
 			$db->getNumberOfRows() != 0) {
 			while($plugin = $db->fetchResults()) {
-				if($plugin['enabled'] == 1 and class_exists($plugin['name'])) {
-					$this->attach(new $plugin['name']());
+				if($plugin['enabled'] == 1) {
+					if(class_exists($plugin['name'])) {
+						$this->attach(new $plugin['name']());
+					}
+					else {
+						report('plugin', 'plugin class not found: ' . $plugin['name']);
+					}
 				}	
 			}
 		}
@@ -55,15 +60,15 @@ class pluginManager implements \SplSubject {
 	    }
 	}
 	    
-	    public function toggleHook($authToken) {
-		    if($authToken === $this->_token) {
-			    $this->_hook++;
-			    $this->notify();
-		    }
-		    else {
-			    /*$authToken different from $this->_token*/;
-		    }
-	    }
+	public function toggleHook($authToken) {
+		if($authToken === $this->_token) {
+			$this->_hook++;
+			$this->notify();
+		}
+		else {
+			/*$authToken different from $this->_token*/;
+		}
+	}
 
 	public function getHook() {
 	    return $this->_hook;

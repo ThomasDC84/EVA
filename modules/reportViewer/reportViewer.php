@@ -44,7 +44,7 @@ class reportViewer implements iModules,
 	public function __construct() {
 		//load params here
 		$this->languageDomain = 'reportViewer';
-		$this->txtDomain = __PROTEUS_HOME__ . '/locale';
+		$this->txtDomain = __PROTEUS_HOME__ . '/modules/reportViewer/locale';
 	}
 	
 	private function readLog() {
@@ -131,8 +131,8 @@ class reportViewer implements iModules,
 			sidebarManager::addSidebar($footerSidebar);
 			
 			$this->contents = '<p>' . gettext('No report selected to show') . '</p>';
-			$this->readLog();
 			$this->deleteLogs();
+			$this->readLog();
 		}	
 	}
 	

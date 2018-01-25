@@ -24,34 +24,31 @@ namespace PROTEUS;
 class report {
 	
 	private $id;
-	
+	private $entry;
 	private $contents;
 
 	public function __construct($id) {
 		$this->id = $id;
+		$this->entry = 1;
 		$this->contents = '#### Report ID: ' . $this->id . ' | started at ' . date(DATE_ATOM) . "####\n\n";
 	}
 	
-	public function addContents($errorLevel, $contents) {
-		$this->contents .= '######## New entry at ' . date(DATE_ATOM) . " with error level: $errorLevel ########\n\n" . $contents . "\n\n";
+	public function addContents($contents, $errorLevel = 0) {
+		$this->contents .= '######## Entry number ' . $this->entry . ' at ' . date(DATE_ATOM) . " with error level: $errorLevel ########\n\n" . $contents . "\n\n";
+		$this->entry++;
 	}
 	
 	public function __destruct() {
-		$filename = __PROTEUS_HOME__ . '/reports/report-' . date('Y-m-d\TH.i.s') . '.log';
+		$filename = __PROTEUS_HOME__ . '/reports/report-' . $this->id . '.log';
 		touch($filename);
 		if (is_writable($filename)) {
-			if (!$handle = fopen($filename, 'a')) {
-				echo "Cannot open file ($filename)";
-				exit;
-			}
-			if (fwrite($handle, $this->contents . '#### Report closed at ' . date(DATE_ATOM) . ' #### ' .  "\n") === FALSE) {
-				echo "Cannot write to file ($filename)";
-				exit;
-			}
-			fclose($handle);
+			file_put_contents($filename,
+					  $this->contents .
+					  '#### Report closed at ' . date(DATE_ATOM) . ' #### ' .
+					  PHP_EOL.PHP_EOL);
 		}
 		else {
-			echo "The file $filename is not writable";
+			//The file $filename is not writable;
 		}
 	}
 

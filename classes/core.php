@@ -66,10 +66,12 @@ final class core {
 			
 			if(self::$module instanceOf iSupportSettings) {
 				
-				self::$module->setSettingsManager(new settings(self::$module->getDataBase()));
+				$settings = new settings(self::$module->getDataBase());
+				self::$module->setSettingsManager($settings);
 				
 				if(self::$module instanceOf iSupportInternationalization) {
-					new nativeLanguageSupport(self::$module);
+					$nativeLanguageSupport = new nativeLanguageSupport(self::$module);
+					$settings->setLanguage($nativeLanguageSupport->getLanguage());
 				}
 			}
 			

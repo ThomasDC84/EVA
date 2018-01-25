@@ -25,6 +25,7 @@ final class settings {
 	
 	private $charset;
 	private $encoding;
+	private $language;
 	private $config;
 	private $db;
 	
@@ -81,6 +82,14 @@ final class settings {
 		$path = "", $domain = "", $secure = false, $httponly = false) { //static, user is only one...
 		return setCookie($cookieName, $value, $expire, $path, $domain, $secure,
 		$httponly);
+	}
+	
+	public function getLanguage() {
+		return $this->language;
+	}
+	
+	public function setLanguage($language) {
+		$this->language = $language;
 	}
 }
 

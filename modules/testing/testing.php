@@ -70,22 +70,19 @@ class testing implements iModules,
 	}
 
 	public function prepare() {
+		if(isset($_POST['code'])) {
+			file_put_contents(__PROTEUS_HOME__ . '/modules/testing/snippet.php', $_POST['code']);
+		}
 		$this->title = gettext('Test Area');
 		$this->description = gettext('Module used for testing purpose');
-		$this->contents = gettext('Test contents<br><pre><code>');
-		urlParser::__Init();
-		$this->contents .= 'path: ' . urlParser::getPath() . PHP_EOL;
 		
-		$i=0;
-		while(urlParser::getPath($i) !== false) {
-			  $this->contents .= $i . ') ' .  urlParser::getPath($i) . PHP_EOL;
-			  $i++;
-		}
+		ob_start();
 		
-		$className = 'pageAdmin';
-		$this->contents .= '/modules/' . str_ireplace('Admin', '', $className) . '/' . $className . '.php' . PHP_EOL;
+		include __PROTEUS_HOME__ . '/modules/testing/snippet.php';
 		
-		$this->contents .= '</code></pre>';
+		$this->contents .= htmlentities(ob_get_clean());
+		
+		$this->template->replace('%{code}%', file_get_contents(__PROTEUS_HOME__ . '/modules/testing/snippet.php'));
 		
 	}
 

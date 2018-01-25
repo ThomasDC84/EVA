@@ -44,7 +44,7 @@ class admin implements  iModules,
 	public function __construct() {
 		//load params here
 		$this->languageDomain = 'admin';
-		$this->txtDomain = __PROTEUS_HOME__ . '/locale';
+		$this->txtDomain = __PROTEUS_HOME__ . '/modules/admin/locale';
 	}
 
 	public function getTitle() {
@@ -85,13 +85,15 @@ class admin implements  iModules,
 		else {
 			$leftSidebar = new sidebar('leftSideBar');
 			
-			$adminWidget = new adminWidget($this->dataBase);
+			$adminWidget = new adminWidget($this);
 			
 			$leftSidebar->addWidget($adminWidget, 1);
 			
 			$footerSidebar = new sidebar('footerSideBar');
 			
-			$footerWidget = new dummyWidget('footer', 'PROTEUS Admin Area');
+			$footerWidget = new dummyWidget('footer', gettext('PROTEUS Admin Area'));
+			
+			$footerWidget->setUseTemplate(true);
 			
 			$footerSidebar->addWidget($footerWidget, 1);
 			
@@ -101,6 +103,7 @@ class admin implements  iModules,
 			/** Load Specific Settings **/
 			switch(urlParser::getUrlParameter('options')) {
 				case 'module': {
+					$moduleSettings = null;
 					$moduleOption = urlParser::getUrlParameter('module') . 'Admin';
 					if(class_exists($moduleOption, true)) {
 						$moduleSettings = new $moduleOption();
@@ -109,11 +112,19 @@ class admin implements  iModules,
 						$moduleOption = 'PROTEUS\\'.$moduleOption;
 						$moduleSettings = new $moduleOption();
 					}
-					$this->title .= ' | ' . $moduleSettings->getTitle();
-					$this->description .= ' | ' . $moduleSettings->getDescription();
-					$this->contents .= $moduleSettings->getContents();
+					if($moduleSettings != null) {
+						$this->title .= ' | ' . $moduleSettings->getTitle();
+						$this->description .= ' | ' . $moduleSettings->getDescription();
+						$this->contents .= $moduleSettings->getContents();
+					}
+					else {
+						$this->title .= ' | ' . gettext('Not Found');
+						$this->description .= ' | ' . gettext('Module requested not found');
+						$this->contents .= gettext('The module selected does not exist or does not have an administration module');
+					}
 				}; break;
 				case 'plugin': {
+					$pluginSettings = null;
 					$pluginOption = urlParser::getUrlParameter('plugin') . 'Admin';
 					if(class_exists($pluginOption, true)) {
 						$pluginSettings = new $pluginOption();
@@ -122,9 +133,16 @@ class admin implements  iModules,
 						$pluginOption = 'PROTEUS\\'.$pluginOption;
 						$pluginSettings = new $pluginOption();
 					}
-					$this->title .= ' | ' . $pluginSettings->getTitle();
-					$this->description .= ' | ' . $pluginSettings->getDescription();
-					$this->contents .= $pluginSettings->getContents();
+					if($pluginSettings != null) {
+						$this->title .= ' | ' . $pluginSettings->getTitle();
+						$this->description .= ' | ' . $pluginSettings->getDescription();
+						$this->contents .= $pluginSettings->getContents();
+					}
+					else {
+						$this->title .= ' | ' . gettext('Not Found');
+						$this->description .= ' | ' . gettext('Plugin requested not found');
+						$this->contents .= gettext('The plugin selected does not exist or does not have an administration module');
+					}
 				}; break;
 				default: ;
 			}

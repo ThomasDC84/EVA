@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PROTEUS ReportViewer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-03 18:00+0100\n"
+"PO-Revision-Date: 2018-01-23 10:33+0100\n"
+"Last-Translator: Thomas Di Cristofaro <thomas.dc84@gmail.com>\n"
+"Language-Team: PROTEUS <it@proteus-engine.org>\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: /var/www/html/proteus/modules/reportViewer/\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.6.10\n"
+"X-Poedit-SearchPath-0: /var/www/html/proteus/modules/reportViewer\n"
+
+#: /var/www/html/proteus/modules/reportViewer/reportListWidget.php:14
+msgid "Report List:"
+msgstr "Elenco Rapporti:"
+
+#: /var/www/html/proteus/modules/reportViewer/reportListWidget.php:17
+msgid "Show"
+msgstr "Mostra"
+
+#: /var/www/html/proteus/modules/reportViewer/reportListWidget.php:20
+msgid "Select All"
+msgstr "Seleziona Tutti"
+
+#: /var/www/html/proteus/modules/reportViewer/reportListWidget.php:22
+msgid "Delete Selected"
+msgstr "Cancella Selezionati"
+
+#: /var/www/html/proteus/modules/reportViewer/reportListWidget.php:23
+msgid "Select None"
+msgstr "Annulla Selezione"
+
+#: /var/www/html/proteus/modules/reportViewer/reportViewer.php:21
+msgid "System Report Viewer"
+msgstr "Visualizzatore Rapporti di Sistema"
+
+#: /var/www/html/proteus/modules/reportViewer/reportViewer.php:29
+msgid "Access Denied"
+msgstr "Accesso Negato"
+
+#: /var/www/html/proteus/modules/reportViewer/reportViewer.php:30
+msgid "Please authenticate yourself in the"
+msgstr "Cortesemente autenticati nella"
+
+#: /var/www/html/proteus/modules/reportViewer/reportViewer.php:31
+msgid "authentication page"
+msgstr "pagina di autenticazione"
+
+#: /var/www/html/proteus/modules/reportViewer/reportViewer.php:42
+msgid "No report selected to show"
+msgstr "Nessun report selezionato per la visualizzazione"
+
+#: /var/www/html/proteus/modules/reportViewer/reportViewer.php:115
+msgid "Logged as: "
+msgstr "Registrato come: "
+
+#~ msgid "NONAME00"
+#~ msgstr "NONAME00"
+
+#~ msgid "Report Viewer"
+#~ msgstr "Visualizzatore Rapporti"

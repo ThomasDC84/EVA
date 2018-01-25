@@ -1,13 +1,77 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" 
-   "http://www.w3.org/TR/html4/strict.dtd">
+<!doctype html>
 <html>
   <head>
     <title>%{title}%</title>
     <meta name="description" content="%{description}%">
+    <link rel="icon" type="image/png" href="%{PROTEUS_URL}%/modules/testing/favicon.png" />
+    <meta charset="utf-8" />
+    <meta generator="csscreator.com" />
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      //<![CDATA[
+      window.__cfRocketOptions = {byc:0,p:0,petok:"d6c9b59a1ba8898f838c1bea8c700c5dcb54af71-1516870377-1800"};
+      //]]>
+    </script>
+    <script type="text/javascript" src="https://ajax.cloudflare.com/cdn-cgi/scripts/b7ef205d/cloudflare-static/rocket.min.js"></script>
+    
+    <!-- Requires CodeMirror from http://codemirror.net/ -->
+    <link rel="stylesheet" href="/proteus/thirdparty/codemirror/lib/codemirror.css">
+    <script src="/proteus/thirdparty/codemirror/lib/codemirror.js"></script>
+    <script src="/proteus/thirdparty/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/xml/xml.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/css/css.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/clike/clike.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/php/php.js"></script>
+    <!-- End requirements of CodeMirror -->
+    
+    <link rel="stylesheet" href="/proteus/modules/testing/stylesheet.css" type="text/css" />
   </head>
   <body>
-    <div>
-      %{contents}%
+    <div id="pagewidth">
+      <div id="header">
+        <a href="/testing/index.php"><img src="/proteus/modules/testing/flask.png" height="64" width="64"></a>
+        <span style="font-weight: bold;  font-size: large; vertical-align: 125%;">%{title}%</span>
+      </div>
+      <div id="wrapper" class="clearfix">
+        <div id="maincol">
+	    <h2 style="text-align: center;">Risultato:</h2>
+	  <div id="codeContainer">
+	    <pre>
+	      <code>
+%{contents}%
+	      </code>
+	    </pre>
+	  </div>
+        </div>
+        <div id="leftcol">
+          <form id="codeEditor" action="/testing/index.php" method="post">
+            <fieldset>
+              <legend>Codice da provare:</legend>
+              <label for="code">Code:</label><br>
+               <textarea id="code" onclick="code.toggleEditor()" name="code" rows="20" form="codeEditor">
+%{code}%
+               </textarea> 
+              <br><br>
+              <input type="submit" onclick="code.toggleEditor()" value="Invia">
+              <input type="reset" value="Cancella">
+            </fieldset>
+          </form>
+	    <script>
+	      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+		lineNumbers: true,
+		matchBrackets: true,
+		mode: "application/x-httpd-php",
+		indentUnit: 4,
+		indentWithTabs: true
+	      });
+	      </script>
+        </div>
+      </div>
     </div>
   </body>
 </html>
+

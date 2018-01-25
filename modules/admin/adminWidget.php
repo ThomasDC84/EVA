@@ -23,25 +23,40 @@ namespace PROTEUS;
 
 class adminWidget implements iWidget {
 
-	public function __construct($database) {
+	public function __construct($adminModule) {
+		$database = $adminModule->getDataBase();
+		$language = $adminModule->getSettingsManager()->getLanguage();
 		$this->title = gettext('Admin Widget');
 		$this->description = gettext('Widget that shows a menu option in the administration area');
 		$this->contents = '<div id="menu12">
 			  <ul>' . PHP_EOL;
 		$this->contents .= '<li><div class="bt1"><span class="ht11">&raquo;&nbsp;</span>
-			    <span class="hw12">Generale</span></div></li>
-			    <li><a href="/admin/index.php">Bacheca</a></li>
-			    <li><a href="/admin/index.php?options=statistics">Statistiche</a></li>
-			    <li><a href="/admin/index.php?options=database">Banche Dati</a></li>
-			    <li><a href="/admin/index.php?options=internationalization">Internazionalizzazione</a></li>
-			    <li><a href="/admin/index.php?options=users">Utenti</a></li>';
+			    <span class="hw12">' . gettext('General') . '</span></div></li>
+			    <li><a href="/admin/index.php">' . gettext('Showcase') . '</a></li>
+			    <li><a href="/admin/index.php?options=statistics">' . gettext('Statistics') .' </a></li>
+			    <li><a href="/admin/index.php?options=database">' . gettext('Data Base') . '</a></li>
+			    <li><a href="/admin/index.php?options=internationalization">' . gettext('Internationalization') . '</a></li>
+			    <li><a href="/admin/index.php?options=users">' . gettext('Users') . '</a></li>';
 		
 		/** Modules Section BEGIN **/
 		$this->contents .= '<li><div class="bt1"><span class="ht11">&raquo;&nbsp;</span>
 			    <span class="hw12">Moduli</span></div></li>';
 		$database->query('SELECT * FROM `modules` ');
 		while($module = $database->fetchResults()) {
-			$this->contents .= '<li><a title="Home" href="/admin/index.php?options=module&module=' . $module['name'] . '">' . $module['description'] . '</a></li>' . PHP_EOL;
+			$info = null;
+			$name = $module['name'];
+			$description = $module['description'];
+			$ini_file = __PROTEUS_HOME__ . '/modules/' . $module['name'] . '/module.ini';
+			if(file_exists($ini_file)) {
+				$info = parse_ini_file($ini_file, true);
+				if(isset($info[$language]['name'])) {
+					$name = $info[$language]['name'];
+				}
+				if(isset($info[$language]['description'])) {
+					$description = $info[$language]['description'];
+				}
+			}
+			$this->contents .= '<li><a title="' . $description . '" href="/admin/index.php?options=module&module=' . $module['name'] . '">' . $name . '</a></li>' . PHP_EOL;
 		}
 		/** Modules Section END**/
 		
@@ -51,12 +66,25 @@ class adminWidget implements iWidget {
 			    <span class="hw12">Accessori</span></div></li>';
 		$database->query('SELECT * FROM `plugins` ');
 		while($plugin = $database->fetchResults()) {
-			$this->contents .= '<li><a href="/admin/index.php?options=plugin&plugin=' . $plugin['name'] . '">' . $plugin['description'] . '</a></li>' . PHP_EOL;
+			$info = null;
+			$name = $plugin['name'];
+			$description = $plugin['description'];
+			$ini_file = __PROTEUS_HOME__ . '/plugins/' . str_replace('PROTEUS\\', '',$plugin['name']) . '/plugin.ini';
+			if(file_exists($ini_file)) {
+				$info = parse_ini_file($ini_file, true);
+				if(isset($info[$language]['name'])) {
+					$name = $info[$language]['name'];
+				}
+				if(isset($info[$language]['description'])) {
+					$description = $info[$language]['description'];
+				}
+			}
+			$this->contents .= '<li><a title="' . $description . '" href="/admin/index.php?options=plugin&plugin=' . str_replace('PROTEUS\\', '',$plugin['name']) . '">' . $name . '</a></li>' . PHP_EOL;
 		}
 		$this->contents .= '<li><div class="bt1"><span class="ht11">&raquo;&nbsp;</span>
-			    <span class="hw12">Aiuto</span></div></li>
-			    <li><a href="/admin/index.php?options=help">Guida</a></li>
-			    <li><a href="/admin/index.php?options=info">Info</a></li>';
+			    <span class="hw12">' . gettext('Help') . '</span></div></li>
+			    <li><a href="/admin/index.php?options=help">' . gettext('Guide') . '</a></li>
+			    <li><a href="/admin/index.php?options=info">' . gettext('Info') . '</a></li>';
 		$this->contents .= '
 			  </ul>
 			</div>';
