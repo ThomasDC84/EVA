@@ -45,7 +45,7 @@ spl_autoload_register('proteusAutoCall');
 
 function callSubModule($subModuleName = null) {
 	if($subModuleName == null) {
-		$subModuleName = PROTEUS\urlParser::getPath(1);
+		$subModuleName = PROTEUS\core::getModuleName() .'\''. PROTEUS\urlParser::getPath(1);
 	}
 	$result = false;
 	$classFile = __PROTEUS_HOME__ . '/modules/' . str_ireplace('PROTEUS\\', '', PROTEUS\core::getModuleName()) . '/subModules/' . $subModuleName . '.php';
@@ -55,7 +55,7 @@ function callSubModule($subModuleName = null) {
 			$result = new $subModuleName(PROTEUS\core::getModule());
 		}
 		elseif(class_exists('PROTEUS\\' . $subModuleName)) {
-			$subModuleName = 'PROTEUS\\' . $subModuleName;
+			$subModuleName = 'PROTEUS\\' . PROTEUS\urlParser::getPath(0) . '\\' . $subModuleName;
 			$result = new $subModuleName(PROTEUS\core::getModule());
 		}
 	}

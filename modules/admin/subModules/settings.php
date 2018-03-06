@@ -31,7 +31,7 @@ class settings {
 	}
 	
 	private function defaultMenu() {
-		$template = get_template('showcase', __PROTEUS_HOME__ . '/modules/admin/templates/generalSettings.htm');
+		$template = get_template('showcase', __PROTEUS_HOME__ . '/modules/admin/templates/settings.htm');
 		$contents = parse_template(
 		  array('PROTEUS_HOME', 'Update', 'Reset'),
 		  array(__PROTEUS_HOME__, gettext('Update'), gettext('Reset')),

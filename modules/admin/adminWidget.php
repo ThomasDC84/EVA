@@ -37,7 +37,7 @@ class adminWidget implements iWidget {
 			    <li><a href="/admin/index.php?options=database">' . gettext('Data Base') . '</a></li>
 			    <li><a href="/admin/index.php?options=internationalization">' . gettext('Internationalization') . '</a></li>
 			    <li><a href="/admin/index.php?options=users">' . gettext('Users') . '</a></li>' . '</a></li>
-			    <li><a href="/admin/index.php?options=generalSettings">' . gettext('General Settings') . '</a></li>';
+			    <li><a href="/admin/index.php?options=settings">' . gettext('General Settings') . '</a></li>';
 		
 		/** Modules Section BEGIN **/
 		$this->contents .= '<li><div class="bt1"><span class="ht11">&raquo;&nbsp;</span>
