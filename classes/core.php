@@ -86,7 +86,7 @@ final class core {
 		
 		self::$module->prepare();
 		
-		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_OUTPUT
+		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_PRE_OUTPUT
 		
 		if(self::$module instanceOf iSupportTemplate) {
 			$template->setTitle(self::$module->getTitle());
@@ -98,13 +98,16 @@ final class core {
 			self::$output = self::$module->getOutput(); //output comes from the module
 		}
 		
-		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_LAST
+		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_OUTPUT
 		
 		self::shutdown();
 	}
 	
 	private static function loadModule() {
-		self::$moduleName = urlParser::getPath(0);
+		//switch(urlParsingOption) by url settings
+		//case /%module%/%Module's Parameter%/:
+		self::$moduleName = urlParser::getPath(0); //should be urlParser::getModuleName
+		//query the db to know if the module isEnabled()
 		if(class_exists(self::$moduleName)) {
 			self::$module = new self::$moduleName();
 		}

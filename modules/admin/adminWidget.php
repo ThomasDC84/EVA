@@ -36,11 +36,13 @@ class adminWidget implements iWidget {
 			    <li><a href="/admin/index.php?options=statistics">' . gettext('Statistics') .' </a></li>
 			    <li><a href="/admin/index.php?options=database">' . gettext('Data Base') . '</a></li>
 			    <li><a href="/admin/index.php?options=internationalization">' . gettext('Internationalization') . '</a></li>
-			    <li><a href="/admin/index.php?options=users">' . gettext('Users') . '</a></li>';
+			    <li><a href="/admin/index.php?options=users">' . gettext('Users') . '</a></li>' . '</a></li>
+			    <li><a href="/admin/index.php?options=generalSettings">' . gettext('General Settings') . '</a></li>';
 		
 		/** Modules Section BEGIN **/
 		$this->contents .= '<li><div class="bt1"><span class="ht11">&raquo;&nbsp;</span>
-			    <span class="hw12">Moduli</span></div></li>';
+			    <span class="hw12">Moduli</span></div></li>
+			    <li><a href="/admin/index.php?options=module&module=General">' . gettext('General') . '</a></li>';
 		$database->query('SELECT * FROM `modules` ');
 		while($module = $database->fetchResults()) {
 			$info = null;
@@ -63,7 +65,8 @@ class adminWidget implements iWidget {
 		/** Plugins Section BEGIN **/
 		$this->contents .= '
 			    <li><div class="bt1"><span class="ht11">&raquo;&nbsp;</span>
-			    <span class="hw12">Accessori</span></div></li>';
+			    <span class="hw12">' . gettext('PLugins') . '</span></div></li>
+			    <li><a href="/admin/index.php?options=plugin&plugin=General">' . gettext('General') . '</a></li>';
 		$database->query('SELECT * FROM `plugins` ');
 		while($plugin = $database->fetchResults()) {
 			$info = null;

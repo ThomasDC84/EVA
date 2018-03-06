@@ -43,16 +43,20 @@ function proteusAutoCall($className) {
 
 spl_autoload_register('proteusAutoCall');
 
-function callSubModule($subModuleName) {
+function callSubModule($subModuleName = null) {
+	if($subModuleName == null) {
+		$subModuleName = PROTEUS\urlParser::getPath(1);
+	}
 	$result = false;
-	if(file_exists(__PROTEUS_HOME__ . '/modules/' . PROTEUS\core::getModuleName() . '/subModules/' . $subModuleName . '.php')) {
-		require_once __PROTEUS_HOME__ . '/modules/' . PROTEUS\core::getModuleName() . '/subModules/' . $subModuleName . '.php';
+	$classFile = __PROTEUS_HOME__ . '/modules/' . str_ireplace('PROTEUS\\', '', PROTEUS\core::getModuleName()) . '/subModules/' . $subModuleName . '.php';
+	if(file_exists($classFile)) {
+		require_once $classFile;
 		if(class_exists($subModuleName)) {
-			$result = new $subModuleName();
+			$result = new $subModuleName(PROTEUS\core::getModule());
 		}
 		elseif(class_exists('PROTEUS\\' . $subModuleName)) {
 			$subModuleName = 'PROTEUS\\' . $subModuleName;
-			$result = new $subModuleName();
+			$result = new $subModuleName(PROTEUS\core::getModule());
 		}
 	}
 	return $result;
@@ -85,7 +89,7 @@ function get_template($tag, $html) {
 	return $result;
 }
 
-function parse_template($tags, $replacements, $template = '', $tagType = 1)
+function parse_template($tags, $replacements, $template = '')
 {
 	$tagsLength = count($tags);
 	for($i=0; $i<$tagsLength; $i++) {
@@ -95,6 +99,17 @@ function parse_template($tags, $replacements, $template = '', $tagType = 1)
 		$template = file_get_contents($template);
 	}
 	$template = str_ireplace($tags, $replacements, $template);
+	return $template;
+}
+function parse_array2template($values, $template = '')
+{
+	if(is_file($template)) {
+		$template = file_get_contents($template);
+	}
+	foreach($values as $tag => $value) {
+		$template = str_ireplace('%{'. $tag .'}%', $value, $template);
+	}
+	
 	return $template;
 }
 

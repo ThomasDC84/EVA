@@ -71,16 +71,12 @@ class testing implements iModules,
 
 	public function prepare() {
 		if(isset($_POST['code'])) {
-			file_put_contents(__PROTEUS_HOME__ . '/modules/testing/snippet.php', $_POST['code']);
+			file_put_contents(__PROTEUS_HOME__ . '/modules/testing/snippet.php', trim($_POST['code']));
 		}
 		$this->title = gettext('Test Area');
 		$this->description = gettext('Module used for testing purpose');
 		
-		ob_start();
-		
-		include __PROTEUS_HOME__ . '/modules/testing/snippet.php';
-		
-		$this->contents .= htmlentities(ob_get_clean());
+		$this->contents .= htmlentities(file_get_contents(__PROTEUS_URL__ . '/proteus/modules/testing/snippet.php'));
 		
 		$this->template->replace('%{code}%', file_get_contents(__PROTEUS_HOME__ . '/modules/testing/snippet.php'));
 		

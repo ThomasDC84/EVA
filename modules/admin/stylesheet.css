@@ -42,6 +42,14 @@ html,body {
   
 }
 
+fieldset, legend, input {
+  border: 1px solid silver;
+}
+
+input {
+  margin-bottom: 1em;
+}
+
 .clearfix:after {
   content:".";
   display:block;

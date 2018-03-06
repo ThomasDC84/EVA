@@ -67,7 +67,7 @@ final class settings {
 	}
 	
 	public function getEncoding() { //static, user is only one...
-		return $this->encoding;
+		return $this->encoding; //gzip, deflate
 	}
 	
 	public function getCookie($cookieName) { //static, user is only one...

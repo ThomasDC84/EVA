@@ -144,7 +144,10 @@ class admin implements  iModules,
 						$this->contents .= gettext('The plugin selected does not exist or does not have an administration module');
 					}
 				}; break;
-				default: ;
+				default: {
+					callSubModule(urlParser::getUrlParameter('options')) or
+					callSubModule('showcase');
+				};
 			}
 		}
 	}

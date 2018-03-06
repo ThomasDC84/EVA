@@ -114,6 +114,8 @@ class reportViewer implements iModules,
 				gettext('authentication page') . '</a>.';
 		}
 		else {
+			$this->deleteLogs();
+			
 			$reportListWidget = new reportListWidget();
 			
 			$rightSidebar = new sidebar('rightSideBar');
@@ -131,7 +133,7 @@ class reportViewer implements iModules,
 			sidebarManager::addSidebar($footerSidebar);
 			
 			$this->contents = '<p>' . gettext('No report selected to show') . '</p>';
-			$this->deleteLogs();
+			
 			$this->readLog();
 		}	
 	}

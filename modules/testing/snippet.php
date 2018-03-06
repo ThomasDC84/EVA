@@ -1,11 +1,15 @@
 <?php
-print_r(parse_ini_file(__PROTEUS_HOME__ . '/modules/testing/module.ini', true));
 
-if(isset($_POST['code'])) {
-  echo PHP_EOL . 'contents of $_POST["code"] are :' . PHP_EOL . $_POST['code'];
-}
-else {
-  echo '$_POST["code"] was not set';
+$groups = 4294967295;
+$groupsBin = decbin($groups);
+echo $groups . ' in binary is: ' . $groupsBin . PHP_EOL;
+
+for($i = 0; $i < 32; $i++) {
+	echo 'you are';
+	if($groupsBin[$i] == 0) {
+		echo ' not';
+	}
+	echo ' in group #' . $i . PHP_EOL;
 }
 
 ?>
