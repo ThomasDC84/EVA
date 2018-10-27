@@ -37,8 +37,9 @@ final class core {
 
 	public static function boot() {
 
-		error_reporting(E_ALL);
-		ini_set('display_errors', 1);
+		//the next two lines sholud be set up by setting ADM
+		error_reporting(__PROTEUS_ERROR_REPORTING__); //E_ALL
+		ini_set('display_errors', __PROTEUS_DISPLAY_ERRORS__);
 		
 		urlParser::__Init();
 		

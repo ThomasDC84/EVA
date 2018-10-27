@@ -21,6 +21,11 @@
 
 namespace PROTEUS;
 
+define('HOOK_FIRST', 1);
+define('HOOK_CONTENTS', 2);
+define('HOOK_OUTPUT', 3);
+define('HOOK_LAST', 4);
+
 class pluginManager implements \SplSubject {
 	private $_plugins;
 	private $_hook = 0;

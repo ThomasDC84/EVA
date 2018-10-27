@@ -19,20 +19,18 @@
     
 **/
 
-namespace PROTEUS\admin;
-
-class statistics {
-
-	private $parentModule;
-	
-	public function __construct($adminModule) {
-		$this->parentModule = $adminModule;
-		$this->defaultMenu();
-	}
-	
-	private function defaultMenu() {
-		$this->parentModule->setContents(get_template('statistics', __PROTEUS_HOME__ . '/modules/admin/templates/statistics.htm'));
-	}
+if(!defined('__PROTEUS_HOME__')) {
+	define('__PROTEUS_HOME__', getcwd());
 }
+
+if(!defined('__PROTEUS_ERROR_REPORTING__')) {
+	define('__PROTEUS_ERROR_REPORTING__', E_ALL);
+}
+
+if(!defined('__PROTEUS_DISPLAY_ERRORS__')) {
+	define('__PROTEUS_DISPLAY_ERRORS__', 1);
+}
+
+define('__PROTEUS_DEFAULT_DATABASE_FORMAT__', true);
 
 ?>

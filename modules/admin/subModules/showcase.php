@@ -19,7 +19,7 @@
     
 **/
 
-namespace PROTEUS;
+namespace PROTEUS\admin;
 
 class showcase {
 

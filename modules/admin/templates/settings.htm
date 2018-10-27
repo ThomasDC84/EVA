@@ -7,12 +7,18 @@
     <!--settings-->
       <form action="" method='POST'>
 	<fieldset>
-	  <legend>General Settings</legend>
+	  <legend>%{General Settings}%</legend>
 	  <input id="proteusHome" type="text" value="%{PROTEUS_HOME}%">
 	  <label for="proteusHome">Proteus Home Directory</label>
 	  <br/>
 	  <input id="proteusURL" type="text" value="%{PROTEUS_URL}%">
 	  <label for="proteusURL">Proteus Base <acronym title="Uniform Resource Locator">URL</acronym></label>
+	  <br/>
+	  <input id="proteusErrorReporting" type="text" value="%{PROTEUS_ERROR_REPORTING}%">
+	  <label for="proteusErrorReporting">Proteus Error Reporting (E_ALL) - make a select option</label>
+	  <br/>
+	  <input id="proteusDisplayErrors" type="text" value="%{PROTEUS_DISPLAY_ERRORS}%">
+	  <label for="proteusDisplayErrors">Proteus Display Errors (Yes/No) - make a select option same as above</label>
 	  <br/>
 	  <input type="submit" value="%{Update}%">
 	  <input type="reset" value="%{Reset}%">

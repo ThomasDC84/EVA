@@ -53,6 +53,9 @@ class urlParser {
 		if(isset($_GET[$parameterName])) {
 			$retval = escapeString($_GET[$parameterName]);
 		}
+		elseif(isset($_POST[$parameterName])) {
+			$retval = escapeString($_POST[$parameterName]);
+		}
 		return $retval;
 	}
 }

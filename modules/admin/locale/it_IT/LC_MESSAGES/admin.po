@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Admin module for PROTEUS\n"
-"POT-Creation-Date: 2018-01-23 12:15+0100\n"
-"PO-Revision-Date: 2018-01-23 12:26+0100\n"
+"POT-Creation-Date: 2018-10-21 13:03+0100\n"
+"PO-Revision-Date: 2018-10-21 13:11+0100\n"
 "Last-Translator: Thomas Di Cristofaro <thomas.dc84@gmail.com>\n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -42,46 +42,90 @@ msgstr "pagina di autenticazione"
 msgid "PROTEUS Admin Area"
 msgstr "Modulo di Amministrazione per PROTEUS"
 
-#: /var/www/html/proteus/modules/admin/adminWidget.php:27
+#: /var/www/html/proteus/modules/admin/admin.php:121
+#: /var/www/html/proteus/modules/admin/admin.php:142
+msgid "Not Found"
+msgstr "Non Trovato"
+
+#: /var/www/html/proteus/modules/admin/admin.php:122
+msgid "Module requested not found"
+msgstr "Il Modulo Richiesto non esiste"
+
+#: /var/www/html/proteus/modules/admin/admin.php:123
+msgid ""
+"The module selected does not exist or does not have an administration module"
+msgstr ""
+"Il modulo selezionato non esiste o non possiede un modulo di amministrazione"
+
+#: /var/www/html/proteus/modules/admin/admin.php:143
+msgid "Plugin requested not found"
+msgstr "L'Accessorio richiesto non esiste"
+
+#: /var/www/html/proteus/modules/admin/admin.php:144
+msgid ""
+"The plugin selected does not exist or does not have an administration module"
+msgstr ""
+"L'Accessorio selezionato non esiste oppure non possiede un modulo di "
+"amministrazione"
+
+#: /var/www/html/proteus/modules/admin/adminWidget.php:29
 msgid "Admin Widget"
 msgstr "Mostrina di Amministrazione"
 
-#: /var/www/html/proteus/modules/admin/adminWidget.php:28
+#: /var/www/html/proteus/modules/admin/adminWidget.php:30
 msgid "Widget that shows a menu option in the administration area"
 msgstr "Mostrina che espone le opzioni dell&apos;area di amministrazione"
 
-#: /var/www/html/proteus/modules/admin/adminWidget.php:32
+#: /var/www/html/proteus/modules/admin/adminWidget.php:34
+#: /var/www/html/proteus/modules/admin/adminWidget.php:45
+#: /var/www/html/proteus/modules/admin/adminWidget.php:69
 msgid "General"
 msgstr "Generale"
 
-#: /var/www/html/proteus/modules/admin/adminWidget.php:33
+#: /var/www/html/proteus/modules/admin/adminWidget.php:35
 msgid "Showcase"
 msgstr "Bacheca"
 
-#: /var/www/html/proteus/modules/admin/adminWidget.php:34
+#: /var/www/html/proteus/modules/admin/adminWidget.php:36
 msgid "Statistics"
 msgstr "Statistiche"
 
-#: /var/www/html/proteus/modules/admin/adminWidget.php:35
+#: /var/www/html/proteus/modules/admin/adminWidget.php:37
 msgid "Data Base"
 msgstr "Banche Dati"
 
-#: /var/www/html/proteus/modules/admin/adminWidget.php:36
+#: /var/www/html/proteus/modules/admin/adminWidget.php:38
 msgid "Internationalization"
 msgstr "Internazionalizzazione"
 
-#: /var/www/html/proteus/modules/admin/adminWidget.php:37
+#: /var/www/html/proteus/modules/admin/adminWidget.php:39
 msgid "Users"
 msgstr "Utenti"
 
-#: /var/www/html/proteus/modules/admin/adminWidget.php:57
+#: /var/www/html/proteus/modules/admin/adminWidget.php:40
+msgid "General Settings"
+msgstr "Impostazioni Generali"
+
+#: /var/www/html/proteus/modules/admin/adminWidget.php:68
+msgid "PLugins"
+msgstr "Accessori"
+
+#: /var/www/html/proteus/modules/admin/adminWidget.php:88
 msgid "Help"
 msgstr "Aiuto"
 
-#: /var/www/html/proteus/modules/admin/adminWidget.php:58
+#: /var/www/html/proteus/modules/admin/adminWidget.php:89
 msgid "Guide"
 msgstr "Guida"
 
-#: /var/www/html/proteus/modules/admin/adminWidget.php:59
+#: /var/www/html/proteus/modules/admin/adminWidget.php:90
 msgid "Info"
 msgstr "Informazioni"
+
+#: /var/www/html/proteus/modules/admin/subModules/settings.php:37
+msgid "Update"
+msgstr "Aggiorna"
+
+#: /var/www/html/proteus/modules/admin/subModules/settings.php:37
+msgid "Reset"
+msgstr "Reimposta"

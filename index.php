@@ -19,9 +19,7 @@
     
 **/
 
-if(!defined('__PROTEUS_HOME__')) {
-	define(__PROTEUS_HOME__, getcwd());
-}
+require_once 'definitions.php';
 
 include_once(__PROTEUS_HOME__ . "/functions/default.php");
 

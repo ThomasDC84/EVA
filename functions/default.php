@@ -19,12 +19,6 @@
     
 **/
 
-define('__PROTEUS_DEFAULT_DATABASE_FORMAT__', true);
-define('HOOK_FIRST', 1);
-define('HOOK_CONTENTS', 2);
-define('HOOK_OUTPUT', 3);
-define('HOOK_LAST', 4);
-
 function proteusAutoCall($className) {
 	$className = str_ireplace('PROTEUS\\', '', $className);
 	if(file_exists(__PROTEUS_HOME__ . '/classes/' . $className . '.php')) {
@@ -44,6 +38,7 @@ function proteusAutoCall($className) {
 spl_autoload_register('proteusAutoCall');
 
 function callSubModule($subModuleName = null) {
+
 	if($subModuleName == null) {
 		$subModuleName = PROTEUS\core::getModuleName() .'\''. PROTEUS\urlParser::getPath(1);
 	}
@@ -54,7 +49,8 @@ function callSubModule($subModuleName = null) {
 		if(class_exists($subModuleName)) {
 			$result = new $subModuleName(PROTEUS\core::getModule());
 		}
-		elseif(class_exists('PROTEUS\\' . $subModuleName)) {
+		elseif(class_exists('PROTEUS\\' . $subModuleName) or
+		       class_exists('PROTEUS\\admin\\' . $subModuleName)) {
 			$subModuleName = 'PROTEUS\\' . PROTEUS\urlParser::getPath(0) . '\\' . $subModuleName;
 			$result = new $subModuleName(PROTEUS\core::getModule());
 		}
