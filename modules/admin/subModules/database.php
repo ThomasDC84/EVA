@@ -27,17 +27,25 @@ class database {
 	
 	public function __construct($adminModule) {
 		$this->parentModule = $adminModule;
-		$this->defaultMenu();
+		$this->loadContents();
 	}
 	
-	private function defaultMenu() {
-		$configurationFile = __PROTEUS_HOME__ . '/conf/db.ini.php';
+	private function loadContents() {
+		$contents = '';
+		$dbFactory = new \PROTEUS\dbFactory();
+		if ( $_SERVER['REQUEST_METHOD'] == 'POST' and !empty($_POST)) {
+			write_php_ini($_POST, $dbFactory->getConfigurationFile());
+			$updatemessage = get_template('update', __PROTEUS_HOME__ . '/modules/admin/templates/database.htm');
+			$contents .= parse_template('UpdateSuccesfully',
+				      gettext('Update Succesfully!'),
+				      $updatemessage);
+		}
+		$configurationFile = $dbFactory->getConfigurationFile();
 		$configuration = parse_ini_file($configurationFile, true);
 		$template = get_template('settings', __PROTEUS_HOME__ . '/modules/admin/templates/database.htm');
-		$contents = parse_template(
+		$contents .= parse_template(
 			array(
 			'Database Settings',
-			'PROTEUS_DEFAULT_DATABASE',
 			'defaultDatabaseLabel',
 			'MySQLhost',
 			'MySQLhostLabel',
@@ -58,7 +66,6 @@ class database {
 			
 			array(
 			gettext('Database Settings'),
-			$configuration['General']['defaultDB'],
 			gettext('Default Database'),
 			$configuration['MySQL']['host'],
 			gettext('MySQL Host'),
@@ -77,6 +84,10 @@ class database {
 			gettext('Update'),
 			gettext('Reset')),
 			$template);
+		$contents = str_replace(
+			'value="' . $configuration['General']['defaultDB'] . '"',
+			'value="' . $configuration['General']['defaultDB'] . '" selected="selected"',
+			$contents);
 		$this->parentModule->setContents($contents);
 	}
 }

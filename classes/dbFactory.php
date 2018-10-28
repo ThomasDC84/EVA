@@ -31,9 +31,37 @@ class dbFactory {
 		$this->setConfigurationFile($configurationFile);
 	}
 	
+	private function checkConfigurationFile() {
+		$result = false;
+		if( isset($this->configuration['General']['defaultDB']) and
+		    isset($this->configuration['MySQL']['host']) and
+		    isset($this->configuration['MySQL']['username']) and
+		    isset($this->configuration['MySQL']['password']) and
+		    isset($this->configuration['MySQL']['dbname']) and
+		    isset($this->configuration['MySQL']['port']) and
+		    isset($this->configuration['MySQL']['socket']) and
+		    isset($this->configuration['SQLite3']['dbname'])
+		) {
+			$result = true;
+		}
+		return $result;
+	}
+	
+	public function getConfigurationFile() {
+		return $this->configurationFile;
+	}
+	
 	public function setConfigurationFile($configurationFile) {
 		$this->configurationFile = $configurationFile;
 		$this->configuration = parse_ini_file($this->configurationFile, true);
+	}
+	
+	public function writeConfigurationFile() {
+		$result = $this->checkConfigurationFile();
+		if($result) {
+			write_php_ini($this->configuration, __PROTEUS_HOME__ . '/conf/db.ini.php');
+		}
+		return $result;
 	}
 	
 	public function buildDataBase($dbType, $dbName = null) {

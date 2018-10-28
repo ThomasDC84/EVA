@@ -4,37 +4,47 @@
     <title>Showcase Template</title>
   </head>
   <body>
+    <!--update-->
+    <p style="text-align:center; background-color: yellow; color: red; border: 1px solid green">
+      %{UpdateSuccesfully}%
+     </p>
+    <!--/update-->
     <!--settings-->
       <form action="" method='POST'>
 	<fieldset>
 	  <legend>%{Database Settings}%</legend>
-	  <input id="defaultDatabase" type="text" value="%{PROTEUS_DEFAULT_DATABASE}%">
-	  <label for="defaultDatabase">%{defaultDatabaseLabel}%</label>
+	  <br/>
+	  <label for="defaultDatabase">%{defaultDatabaseLabel}%:</label>
+	  <select id="defaultDatabase" name="General[defaultDB]">
+		 <option value="SQLite3">SQLite3</option>
+		 <option value="MySQL">MySQL</option>
+	  </select>
+	  <br/>
 	  <br/>
 	  <hr/>
 	  <h3>MySQL</h3>
-	  <input id="MySQLhost" type="text" value="%{MySQLhost}%">
+	  <input id="MySQLhost" name="MySQL[host]" type="text" value="%{MySQLhost}%">
 	  <label for="MySQLhost">%{MySQLhostLabel}%</label>
 	  <br/>
-	  <input id="MySQLuserName" type="text" value="%{MySQLuserName}%">
+	  <input id="MySQLuserName" name="MySQL[username]" type="text" value="%{MySQLuserName}%">
 	  <label for="MySQLuserName">%{MySQLuserNameLabel}%</label>
 	  <br/>
-	  <input id="MySQLpassword" type="text" value="%{MySQLpassword}%">
-	  <label for="MySQLpasswordLabel">%{MySQLpasswordLabel}%</label>
+	  <input id="MySQLpassword" name="MySQL[password]" type="text" value="%{MySQLpassword}%">
+	  <label for="MySQLpassword">%{MySQLpasswordLabel}%</label>
 	  <br/>
-	  <input id="MySQLdbname" type="text" value="%{MySQLdbname}%">
-	  <label for="MySQLdbnameLabel">%{MySQLdbnameLabel}%</label>
+	  <input id="MySQLdbname" name="MySQL[dbname]" type="text" value="%{MySQLdbname}%">
+	  <label for="MySQLdbname">%{MySQLdbnameLabel}%</label>
 	  <br/>
-	  <input id="MySQLport" type="text" value="%{MySQLport}%">
-	  <label for="MySQLportLabel">%{MySQLportLabel}%</label>
+	  <input id="MySQLport" name="MySQL[port]" type="text" value="%{MySQLport}%">
+	  <label for="MySQLport">%{MySQLportLabel}%</label>
 	  <br/>
-	  <input id="MySQLsocket" type="text" value="%{MySQLsocket}%">
-	  <label for="MySQLsocketLabel">%{MySQLsocketLabel}%</label>
+	  <input id="MySQLsocket" name="MySQL[socket]" type="text" value="%{MySQLsocket}%">
+	  <label for="MySQLsocket">%{MySQLsocketLabel}%</label>
 	  <br/>
 	  <hr/>
 	  <h3>SQLite3</h3>
-	  <input id="SQLite3DBName" type="text" value="%{SQLite3DBName}%">
-	  <label for="SQLite3DBNameLabel">%{SQLite3DBNameLabel}%</label>
+	  <input id="SQLite3DBName" name="SQLite3[dbname]" type="text" value="%{SQLite3DBName}%">
+	  <label for="SQLite3DBName">%{SQLite3DBNameLabel}%</label>
 	  <br/>
 	  <input type="submit" value="%{Update}%">
 	  <input type="reset" value="%{Reset}%">

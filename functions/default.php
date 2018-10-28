@@ -19,6 +19,8 @@
     
 **/
 
+include_once(__PROTEUS_HOME__ . "/functions/thirdparty.php");
+
 function proteusAutoCall($className) {
 	$className = str_ireplace('PROTEUS\\', '', $className);
 	if(file_exists(__PROTEUS_HOME__ . '/classes/' . $className . '.php')) {
@@ -87,9 +89,14 @@ function get_template($tag, $html) {
 
 function parse_template($tags, $replacements, $template = '')
 {
-	$tagsLength = count($tags);
-	for($i=0; $i<$tagsLength; $i++) {
-		$tags[$i] = '%{'.$tags[$i].'}%';
+	if(is_array($tags)) {
+		$tagsLength = count($tags);
+		for($i=0; $i<$tagsLength; $i++) {
+			$tags[$i] = '%{'.$tags[$i].'}%';
+		}
+	}
+	else {
+		$tags = '%{' . $tags . '}%';
 	}
 	if(is_file($template)) {
 		$template = file_get_contents($template);
@@ -123,5 +130,7 @@ function escapeString($string) {
 function report ($id, $contents, $errorLevel = 0) {
 	PROTEUS\reporter::getReport($id)->addContents($contents, $errorLevel);
 }
+
+
 
 ?>
