@@ -38,7 +38,7 @@ final class core {
 	public static function boot() {
 
 		//the next two lines sholud be set up by setting ADM
-		error_reporting(__PROTEUS_ERROR_REPORTING__); //E_ALL
+		error_reporting(__PROTEUS_ERROR_REPORTING__);
 		ini_set('display_errors', __PROTEUS_DISPLAY_ERRORS__);
 		
 		urlParser::__Init();
@@ -49,7 +49,7 @@ final class core {
 		self::$pmToken = rand();
 		self::$pluginManager = new pluginManager(self::$pmToken, $dbFactory->buildDataBase(__PROTEUS_DEFAULT_DATABASE_FORMAT__));
 		
-		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_FIRST
+		self::$pluginManager->toggleHook(self::$pmToken); //FIRST_HOOK
 		
 		self::loadModule();
 		
@@ -83,11 +83,11 @@ final class core {
 			self::$module->setTemplate($template);
 		}
 		
-		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_CONTENTS
+		self::$pluginManager->toggleHook(self::$pmToken); //FEATURES_LOADED_HOOK
 		
 		self::$module->prepare();
 		
-		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_PRE_OUTPUT
+		self::$pluginManager->toggleHook(self::$pmToken); //CONTENTS_HOOK
 		
 		if(self::$module instanceOf iSupportTemplate) {
 			$template->setTitle(self::$module->getTitle());
@@ -99,7 +99,7 @@ final class core {
 			self::$output = self::$module->getOutput(); //output comes from the module
 		}
 		
-		self::$pluginManager->toggleHook(self::$pmToken); //HOOK_OUTPUT
+		self::$pluginManager->toggleHook(self::$pmToken); //LAST_HOOK
 		
 		self::shutdown();
 	}

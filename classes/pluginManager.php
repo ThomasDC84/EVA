@@ -21,10 +21,10 @@
 
 namespace PROTEUS;
 
-define('HOOK_FIRST', 1);
-define('HOOK_CONTENTS', 2);
-define('HOOK_OUTPUT', 3);
-define('HOOK_LAST', 4);
+define('FIRST_HOOK', 1);
+define('FEATURES_LOADED_HOOK', 2);
+define('CONTENTS_HOOK', 3);
+define('LAST_HOOK', 4);
 
 class pluginManager implements \SplSubject {
 	private $_plugins;
@@ -71,7 +71,7 @@ class pluginManager implements \SplSubject {
 			$this->notify();
 		}
 		else {
-			/*$authToken different from $this->_token*/;
+			report('Plug-in Manager Anomaly', '$authToken different from $this->_token', 'RED ALERT');
 		}
 	}
 

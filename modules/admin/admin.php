@@ -145,11 +145,8 @@ class admin implements  iModules,
 					}
 				}; break;
 				default: {
-					callSubModule(urlParser::getUrlParameter('options'));
-					
-\PROTEUS\reporter::getReport('DBsettings')->addContents('module name = ' . \PROTEUS\core::getModuleName(), 0);
-					/*or
-					callSubModule('showcase');*/
+					callSubModule(urlParser::getUrlParameter('options')) or
+					callSubModule('showcase');
 				};
 			}
 		}
