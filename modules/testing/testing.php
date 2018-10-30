@@ -76,7 +76,7 @@ class testing implements iModules,
 		$this->title = gettext('Test Area');
 		$this->description = gettext('Module used for testing purpose');
 		
-		$this->contents .= htmlentities(file_get_contents(__PROTEUS_URL__ . '/proteus/modules/testing/snippet.php'));
+		$this->contents .= htmlentities(file_get_contents(__PROTEUS_URL__ . '/modules/testing/snippet.php'));
 		
 		$this->template->replace('%{code}%', file_get_contents(__PROTEUS_HOME__ . '/modules/testing/snippet.php'));
 		

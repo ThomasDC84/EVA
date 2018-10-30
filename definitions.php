@@ -23,6 +23,11 @@ if(!defined('__PROTEUS_HOME__')) {
 	define('__PROTEUS_HOME__', getcwd());
 }
 
+if(!defined('__PROTEUS_URL__')) {
+	$host = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+	define('__PROTEUS_URL__', $host.'/proteus/');
+}
+
 if(!defined('__PROTEUS_ERROR_REPORTING__')) {
 	define('__PROTEUS_ERROR_REPORTING__', E_ALL);
 }
