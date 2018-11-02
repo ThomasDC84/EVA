@@ -21,6 +21,8 @@
 
 namespace PROTEUS;
 
+include __PROTEUS_HOME__ . '/modules/testing/snippetListWidget.php';
+
 class testing implements iModules,
 			iSupportDataBase,
 			iSupportUser,
@@ -39,10 +41,43 @@ class testing implements iModules,
 	private $user;
 	private $template;
 	
+	private $snippetCode;
+	private $snippetFile;
+	private $snippetList;
+	private $snippetPath;
+	
 	public function __construct() {
 		//load params here
-		$this->languageDomain = 'dummy';
-		$this->txtDomain = __PROTEUS_HOME__ . '/locale';
+		$this->languageDomain = 'testing';
+		$this->txtDomain = __PROTEUS_HOME__ . '/modules/testing/locale';
+		
+		$this->snippetCode = urlParser::getUrlParameter('code');
+		$this->snippetFile = urlParser::getUrlParameter('snippet');
+		$this->snippetPath = __PROTEUS_HOME__ . '/modules/testing/snippets';
+		$this->snippetsUrl = __PROTEUS_URL__ . '/modules/testing/snippets';
+		
+		$this->snippetList = array_diff(scandir($this->snippetPath), array('.', '..'));
+	}
+	
+	private function deleteSnippets() {
+		//delete logs if any
+		if(urlParser::getUrlParameter('action') == 'deleteSnippets') {
+			$snippetFiles = urlParser::getUrlParameter('snippetFile');
+			if($snippetFiles) {
+				if(!is_array($snippetFiles)) {
+					if(file_exists($this->snippetPath . '/' . $snippetFiles)) {
+						unlink($this->snippetPath . '/' . $snippetFiles);
+					}
+				}
+				else {
+					foreach($snippetFiles as $snippet) {
+						if(file_exists($this->snippetPath . '/' . $snippet)) {
+							unlink($this->snippetPath . '/' . $snippet);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public function getTitle() {
@@ -70,16 +105,35 @@ class testing implements iModules,
 	}
 
 	public function prepare() {
-		if(isset($_POST['code'])) {
-			file_put_contents(__PROTEUS_HOME__ . '/modules/testing/snippet.php', trim($_POST['code']));
+		$this->deleteSnippets();
+		$code = '';
+		if(false !== $this->snippetCode and false !== $this->snippetFile) {
+			file_put_contents($this->snippetPath . '/' . $this->snippetFile, trim($_POST['code']));
 		}
 		$this->title = gettext('Test Area');
 		$this->description = gettext('Module used for testing purpose');
 		
-		$this->contents .= htmlentities(file_get_contents(__PROTEUS_URL__ . '/modules/testing/snippet.php'));
+		$this->contents = '';
 		
-		$this->template->replace('%{code}%', file_get_contents(__PROTEUS_HOME__ . '/modules/testing/snippet.php'));
+		$snippetListWidget = new snippetListWidget();
+		$rightSidebar = new sidebar('rightSideBar');
+		$rightSidebar->addWidget($snippetListWidget, 1);
 		
+		sidebarManager::addSidebar($rightSidebar);
+		
+		if(false !== $this->snippetFile and  file_exists($this->snippetPath . '/' . $this->snippetFile)) {
+			$this->contents = htmlentities(file_get_contents($this->snippetsUrl . '/' . $this->snippetFile));
+			$code = file_get_contents($this->snippetPath . '/' . $this->snippetFile);
+		}
+		
+		$this->template->replace('%{result}%', gettext('Result'));
+		$this->template->replace('%{snippetFile}%', $this->snippetFile);
+		$this->template->replace('%{codeLabel}%', gettext('Code'));
+		$this->template->replace('%{code}%', trim($code));
+		$this->template->replace('%{codeTry}%', gettext('Code to test'));
+		$this->template->replace('%{fileName}%', gettext('File Name'));
+		$this->template->replace('%{saveAndRun}%', gettext('Save and Run'));
+		$this->template->replace('%{revertChanges}%', gettext('Revert Changes'));
 	}
 
 	public function getOutput() {

@@ -1,0 +1,36 @@
+<!doctype html>
+    <title>%{title}%</title>
+    <meta name="description" content="%{description}%">
+    <link rel="icon" type="image/png" href="%{PROTEUS_URL}%/modules/testing/favicon.png" />
+    <meta charset="utf-8" />
+    
+    <!-- Requires CodeMirror from http://codemirror.net/ -->
+    <link rel="stylesheet" href="/proteus/thirdparty/codemirror/lib/codemirror.css">
+    
+    <script src="/proteus/thirdparty/codemirror/lib/codemirror.js"></script>
+    
+    <script src="/proteus/thirdparty/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/xml/xml.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/css/css.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/clike/clike.js"></script>
+    <script src="/proteus/thirdparty/codemirror/mode/php/php.js"></script>
+    <!-- End requirements of CodeMirror -->
+  <article>
+      <textarea id="code" name="code">function belfagor() {
+	  help();
+	  help();
+	  help();
+      }</textarea>
+      	    <script>
+	      var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+		lineWrapping: true;
+		lineNumbers: true,
+		matchBrackets: true,
+		mode: "application/x-httpd-php",
+		indentUnit: 4,
+		indentWithTabs: true
+	      });
+	      </script>
+  </article>

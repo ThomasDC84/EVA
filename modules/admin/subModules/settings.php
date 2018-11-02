@@ -33,8 +33,16 @@ class settings {
 	private function defaultMenu() {
 		$template = get_template('settings', __PROTEUS_HOME__ . '/modules/admin/templates/settings.htm');
 		$contents = parse_template(
-		  array('PROTEUS_HOME', 'General Settings', 'Update', 'Reset'),
-		  array(__PROTEUS_HOME__, gettext('General Settings'), gettext('Update'), gettext('Reset')),
+		  array('PROTEUS_HOME',
+			'PROTEUS_URL',
+			'General Settings',
+			'Update',
+			'Reset'),
+		  array(__PROTEUS_HOME__,
+			__PROTEUS_URL__,
+			gettext('General Settings'),
+			gettext('Update'),
+			gettext('Reset')),
 		  $template);
 		$this->parentModule->setTitle($this->parentModule->getTitle() . ' | ' . gettext('General Settings'));
 		$this->parentModule->setContents($contents);

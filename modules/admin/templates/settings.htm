@@ -12,14 +12,32 @@
 	  <label for="proteusHome">Proteus Home Directory</label>
 	  <br/>
 	  <input id="proteusURL" type="text" value="%{PROTEUS_URL}%">
-	  <label for="proteusURL">Proteus Base <acronym title="Uniform Resource Locator">URL</acronym></label>
+	  <label for="proteusURL">Proteus base <acronym title="Uniform Resource Location">URL</acronym></label>
+	  <hr/>
+	  Settings override for <a href="https://php.net/manual/en/function.error-reporting.php">php function error_reporting()</a>
 	  <br/>
-	  <input id="proteusErrorReporting" type="text" value="%{PROTEUS_ERROR_REPORTING}%">
-	  <label for="proteusErrorReporting">Proteus Error Reporting (E_ALL) - make a select option</label>
-	  <br/>
-	  <input id="proteusDisplayErrors" type="text" value="%{PROTEUS_DISPLAY_ERRORS}%">
-	  <label for="proteusDisplayErrors">Proteus Display Errors (Yes/No) - make a select option same as above</label>
-	  <br/>
+	  <input type="checkbox" id="E_ALL" name="E_ALL" value="true"> <label for="E_ALL">E_ALL - All errors and warnings</label><br/>
+	  <input type="checkbox" id="E_ERROR" name="E_ERROR" value="true"> <label for="E_ERROR">E_ERROR - fatal run-time errors</label><br/>
+	  <input type="checkbox" id="E_WARNING" name="E_WARNING" value="true"> <label for="E_WARNING">E_WARNING - run-time warnings (non-fatal errors)</label><br/>
+	  <input type="checkbox" id="E_PARSE" name="E_PARSE" value="true"> <label for="E_PARSE">E_PARSE - compile-time parse errors</label><br/>
+	  <input type="checkbox" id="E_DEPRECATED" name="E_DEPRECATED" value="true"> <label for="E_DEPRECATED">E_DEPRECATED - notices for the use of functions that will be retired in a future version</label><br/>
+	  <input type="checkbox" id="E_NOTICE" name="E_NOTICE" value="true"> <label for="E_NOTICE">E_NOTICE - run-time notices (these are warnings which often result from a bug in your code, but it's possible that it was intentional (e.g., using an uninitialized variable and relying on the fact it's automatically initialized to an empty string)</label><br/>
+	  <input type="checkbox" id="E_CORE_ERROR" name="E_CORE_ERROR" value="true"> <label for="E_CORE_ERROR">E_CORE_ERROR - fatal errors that occur during PHP's initial startup</label><br/>
+	  <input type="checkbox" id="E_CORE_WARNING" name="E_CORE_WARNING" value="true"> <label for="E_CORE_WARNING">E_CORE_WARNING - warnings (non-fatal errors) that occur during PHP's initial startup</label><br/>
+	  <input type="checkbox" id="E_COMPILE_ERROR" name="E_COMPILE_ERROR" value="true"> <label for="E_COMPILE_ERROR">E_COMPILE_ERROR - fatal compile-time errors</label><br/>
+	  <input type="checkbox" id="E_COMPILE_WARNING" name="E_COMPILE_WARNING" value="true"> <label for="E_COMPILE_WARNING">E_COMPILE_WARNING - compile-time warnings (non-fatal errors)</label><br/>
+	  <input type="checkbox" id="E_USER_ERROR" name="E_USER_ERROR" value="true"> <label for="E_USER_ERROR">E_USER_ERROR - user-generated error message</label><br/>
+	  <input type="checkbox" id="E_USER_WARNING" name="E_USER_WARNING" value="true"> <label for="E_USER_WARNING">E_USER_WARNING - user-generated warning message</label><br/>
+	  <input type="checkbox" id="E_USER_NOTICE" name="E_USER_NOTICE" value="true"> <label for="E_USER_NOTICE">E_USER_NOTICE - user-generated notice message</label>
+	  <hr/>
+	  <label for="showErrors">Show Errors?:</label>
+	  <select id="showErrors">
+	    <option value="yes">yes</option>
+	    <option value="no">no</option>
+	  </select>
+	  [override for <a href="https://secure.php.net/manual/en/function.ini-set.php#refsect1-function.ini-set-examples">
+	  php function: ini_set('display_errors', '1');]
+	  </a><hr/>
 	  <input type="submit" value="%{Update}%">
 	  <input type="reset" value="%{Reset}%">
 	</fieldset>

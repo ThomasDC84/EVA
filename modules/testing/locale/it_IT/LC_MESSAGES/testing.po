@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Testing Module of Proteus\n"
+"POT-Creation-Date: 2018-11-01 18:43+0100\n"
+"PO-Revision-Date: 2018-11-01 18:43+0100\n"
+"Last-Translator: Thomas Di Cristofaro <thomas.dc84@gmail.com>\n"
+"Language-Team: \n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.10\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: /home/thomas/localhost/proteus/modules/testing\n"
+
+#: /home/thomas/localhost/proteus/modules/testing/snippetListWidget.php:30
+#: /home/thomas/localhost/proteus/modules/testing/snippetListWidget.php:33
+msgid "Snippet List"
+msgstr "Lista Spezzoni di Codice"
+
+#: /home/thomas/localhost/proteus/modules/testing/snippetListWidget.php:39
+msgid "Select All"
+msgstr "Seleziona Tutti"
+
+#: /home/thomas/localhost/proteus/modules/testing/snippetListWidget.php:41
+msgid "Delete Selected"
+msgstr "Cancella Tutti"
+
+#: /home/thomas/localhost/proteus/modules/testing/snippetListWidget.php:42
+msgid "Select None"
+msgstr "Deseleziona tutti"
+
+#: /home/thomas/localhost/proteus/modules/testing/testing.php:114
+msgid "Test Area"
+msgstr "Area di Prova"
+
+#: /home/thomas/localhost/proteus/modules/testing/testing.php:115
+msgid "Module used for testing purpose"
+msgstr "Modulo utilizzato per scopi di prova"
+
+#: /home/thomas/localhost/proteus/modules/testing/testing.php:130
+msgid "Result"
+msgstr "Risultato"
+
+#: /home/thomas/localhost/proteus/modules/testing/testing.php:132
+msgid "Code"
+msgstr "Codice"
+
+#: /home/thomas/localhost/proteus/modules/testing/testing.php:134
+msgid "Code to test"
+msgstr "Codice da provare"
+
+#: /home/thomas/localhost/proteus/modules/testing/testing.php:135
+msgid "File Name"
+msgstr "Nome del File"
+
+#: /home/thomas/localhost/proteus/modules/testing/testing.php:136
+msgid "Save and Run"
+msgstr "Salva ed Esegui"
+
+#: /home/thomas/localhost/proteus/modules/testing/testing.php:137
+msgid "Revert Changes"
+msgstr "Annulla Modifiche"
+
+#~ msgid "Snippet List:"
+#~ msgstr "Lista Spezzoni di Codice"

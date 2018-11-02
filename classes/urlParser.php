@@ -49,14 +49,28 @@ class urlParser {
 	}
 	
 	public static function getUrlParameter($parameterName) {
-		$retval = null;
+		$result = false;
 		if(isset($_GET[$parameterName])) {
-			$retval = escapeString($_GET[$parameterName]);
+			if(!is_array($_GET[$parameterName])) {
+				$result = escapeString($_GET[$parameterName]);
+			}
+			else {
+				foreach($_GET[$parameterName] as $getParameter) {
+					$result[] = escapeString($getParameter);
+				}
+			}
 		}
 		elseif(isset($_POST[$parameterName])) {
-			$retval = escapeString($_POST[$parameterName]);
+			if(!is_array($_POST[$parameterName])) {
+				$result = escapeString($_POST[$parameterName]);
+			}
+			else {
+				foreach($_POST[$parameterName] as $postParameter) {
+					$result[] = escapeString($postParameter);
+				}
+			}
 		}
-		return $retval;
+		return $result;
 	}
 }
 

@@ -29,6 +29,16 @@
     <!-- End requirements of CodeMirror -->
     
     <link rel="stylesheet" href="/proteus/modules/testing/stylesheet.css" type="text/css" />
+    
+    <script language="JavaScript">
+    function toggle(source) {
+      checkboxes = document.getElementsByName('snippet[]');
+      for(var i=0, n=checkboxes.length;i<n;i++) {
+	checkboxes[i].checked = source.checked;
+      }
+    }
+    </script>
+    
   </head>
   <body>
     <div id="pagewidth">
@@ -38,30 +48,29 @@
       </div>
       <div id="wrapper" class="clearfix">
         <div id="maincol">
-	    <h2 style="text-align: center;">Risultato:</h2>
-	  <div id="codeContainer">
-	    <pre>
-	      <code>
-%{contents}%
-	      </code>
-	    </pre>
-	  </div>
+	  %{rightSideBar}%
         </div>
         <div id="leftcol">
-          <form id="codeEditor" action="/testing/index.php" method="post">
+	  <h2 style="text-align: center;">%{result}%:</h2>
+	  <div id="codeContainer"><pre><code>%{contents}%</code></pre></div>
+        </div>
+      </div>
+    <div id="footer">
+              <form id="codeEditor" action="/testing/index.php" method="post">
             <fieldset>
-              <legend>Codice da provare:</legend>
-              <label for="code">Code:</label><br>
-               <textarea id="code" onclick="code.toggleEditor()" name="code" rows="20" form="codeEditor">
-%{code}%
-               </textarea> 
+              <legend>%{codeTry}%:</legend>
+              <label for="codeArea">%{codeLabel}%:</label><br>
+               <textarea id="codeArea" onclick="code.toggleEditor()" name="code" rows="10" form="codeEditor">%{code}%</textarea> 
               <br><br>
-              <input type="submit" onclick="code.toggleEditor()" value="Invia">
-              <input type="reset" value="Cancella">
+              <label for="snippetFile">%{fileName}%: </label>
+              <input id="snippetFile" name="snippet" type="text" value="%{snippetFile}%" size="25" />
+              <input type="submit" onclick="code.toggleEditor()" value="%{saveAndRun}%">
+              <input type="reset" value="%{revertChanges}%">
             </fieldset>
           </form>
 	    <script>
-	      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+	      var editor = CodeMirror.fromTextArea(document.getElementById("codeArea"), {
+		lineWrapping: true;
 		lineNumbers: true,
 		matchBrackets: true,
 		mode: "application/x-httpd-php",
@@ -69,8 +78,7 @@
 		indentWithTabs: true
 	      });
 	      </script>
-        </div>
-      </div>
+    </div>
     </div>
   </body>
 </html>
