@@ -32,7 +32,7 @@ class snippetListWidget implements iWidget {
 					<fieldset>
 						<legend style="text-align: center;">' . gettext('Snippet List') . '</legend><br/>';
 		foreach($this->files as $snippet) {
-			$this->contents .= '<input type="checkbox" name="snippetFile[]" id="' . $snippet . '" value="' . $snippet . '" />' . PHP_EOL;
+			$this->contents .= '<input type="checkbox" name="snippetFile[]" id="snippetFile[]" value="' . $snippet . '" />' . PHP_EOL;
 			$this->contents .= '<label for="' . $snippet . '"><a href="index.php?snippet=' . $snippet . '" />'. $snippet . '</a></label><br/>' . PHP_EOL;
 		}
 		$this->contents .= '<br/>

@@ -17,6 +17,16 @@ textarea {
   resize: none;
 }
 
+h2.c2 {
+   text-align: center;
+}
+
+span.c1 {
+  font-weight: bold;
+  font-size: large;
+  vertical-align: 125%;
+}
+
 #pagewidth { }
 
 #header {
