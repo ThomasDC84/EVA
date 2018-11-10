@@ -1,7 +1,7 @@
 html,body {
   margin:0;
   padding:0;
-  background-color:#EFEFEF;
+  background-color:#3366FF;
   color: black;
 }
 
@@ -9,7 +9,6 @@ html,body {
 
 #header {
   position:relative;
-  background-color:#3366FF;
   width:100%;
   display:block;
   overflow:auto;
@@ -17,11 +16,15 @@ html,body {
   
 }
 
+#wrapper {
+  background-color:#EFEFEF;
+}
+
 #leftcol {
+  background-color:#6898d0;
   width:25%;
   float:left;
   position:relative;
-  background-color:#3366FF;
   
 }
 
@@ -34,7 +37,6 @@ html,body {
 }
 
 #footer {
-  background-color:#3366FF;
   clear:both;
   display:block;
   overflow:auto;
