@@ -21,7 +21,7 @@
 
 namespace PROTEUS;
 
-class dbSQLite3 {
+class dbSQLite3 implements iDatabase {
 	
 	private $handle;
 	

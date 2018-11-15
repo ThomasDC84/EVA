@@ -21,7 +21,7 @@
 
 namespace PROTEUS;
 
-class dbMysql {
+class dbMysql implements iDatabase {
 	
 	private $connection;
 	
