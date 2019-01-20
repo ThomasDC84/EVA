@@ -69,8 +69,8 @@ class userLog {
 			
 			//load user data here
 			
-			setcookie('userName', $userName, time()+86400, '/');
-			setcookie('password', $password, time()+86400, '/');
+			setcookie('userName', $userName, time()+(86400*21), '/');
+			setcookie('password', $password, time()+(86400*21), '/');
 		}
 		return $user;
 	}
