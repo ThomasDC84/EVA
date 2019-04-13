@@ -47,9 +47,9 @@ final class core {
 		
 		//Plugin Manager will use default DB here
 		self::$pmToken = rand();
-		self::$pluginManager = new pluginManager(self::$pmToken, $dbFactory->buildDataBase(__PROTEUS_DEFAULT_DATABASE_FORMAT__));
-		
-		self::$pluginManager->toggleHook(self::$pmToken); //FIRST_HOOK
+		self::$pluginManager = new pluginManager($dbFactory->buildDataBase(__PROTEUS_DEFAULT_DATABASE_FORMAT__), self::$pmToken);
+				
+		self::$pluginManager->callHook('FIRST_HOOK', self::$pmToken);
 		
 		self::loadModule();
 		
@@ -83,11 +83,11 @@ final class core {
 			self::$module->setTemplate($template);
 		}
 		
-		self::$pluginManager->toggleHook(self::$pmToken); //FEATURES_LOADED_HOOK
+		self::$pluginManager->callHook('FEATURES_LOADED_HOOK', self::$pmToken);
 		
 		self::$module->prepare();
 		
-		self::$pluginManager->toggleHook(self::$pmToken); //CONTENTS_HOOK
+		self::$pluginManager->callHook('CONTENTS_HOOK', self::$pmToken);
 		
 		if(self::$module instanceOf iSupportTemplate) {
 			$template->setTitle(self::$module->getTitle());
@@ -99,7 +99,7 @@ final class core {
 			self::$output = self::$module->getOutput(); //output comes from the module
 		}
 		
-		self::$pluginManager->toggleHook(self::$pmToken); //LAST_HOOK
+		self::$pluginManager->callHook('LAST_HOOK', self::$pmToken);
 		
 		self::shutdown();
 	}

@@ -21,17 +21,12 @@
 
 namespace PROTEUS;
 
-define('FIRST_HOOK', 1);
-define('FEATURES_LOADED_HOOK', 2);
-define('CONTENTS_HOOK', 3);
-define('LAST_HOOK', 4);
-
 class pluginManager implements \SplSubject {
 	private $_plugins;
-	private $_hook = 0;
+	private $_hook;
 	private $_token;
 
-	public function __construct($token, $db) {
+	public function __construct($db, $token = null) {
 		$this->_token = $token;
 		$this->_plugins = new \SplObjectStorage();
 		//load plugins list, require db
@@ -64,10 +59,10 @@ class pluginManager implements \SplSubject {
 		$plugin->update($this);
 	    }
 	}
-	    
-	public function toggleHook($authToken) {
-		if($authToken === $this->_token) {
-			$this->_hook++;
+	
+	public function callHook($hook, $authToken = null) {
+		if($authToken === null or $authToken === $this->_token) {
+			$this->_hook = $hook;
 			$this->notify();
 		}
 		else {
